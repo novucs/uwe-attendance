@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AttendanceApiService } from '../attendance-api.service';
+import { AttendanceApiService } from '../service/attendance-api.service';
 
 @Component({
   selector: 'app-connect',
@@ -12,8 +12,8 @@ export class ConnectComponent implements OnInit {
   schedules: any = [];
   msg : string = "none";
 
-
-  constructor(private attendanceApiService: AttendanceApiService) { }
+  constructor(private attendanceApiService: AttendanceApiService) {
+  }
 
   ngOnInit() {
     // Retrieve posts from the API
@@ -21,5 +21,4 @@ export class ConnectComponent implements OnInit {
       this.schedules = s.data;
     });
   }
-
 }

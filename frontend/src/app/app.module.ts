@@ -6,8 +6,8 @@ import { HttpModule } from '@angular/http';
 import { routing,
          appRoutingProviders }  from './app.routing';
 
-import { AttendanceApiService } from './attendance-api.service';
-import { SocketService } from './socket.service';
+import { AttendanceApiService } from './service/attendance-api.service';
+import { SocketService } from './service/socket.service';
 
 import { AppComponent } from './app.component';
 import { ConnectComponent } from './connect/connect.component';
