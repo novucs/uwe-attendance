@@ -1,0 +1,16 @@
+<p>
+  connect works!
+  {{msg}}
+</p>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select a session
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <div class="row" *ngFor="let schedule of schedules">
+    <a class="dropdown-item" [routerLink]="['/attendance', schedule._id]">{{schedule.event}} on {{schedule.onDate}}</a>
+    <div>
+  </div>
+</div>
+<!--- <a [routerLink]="['./product', 1234]">Product Details</a> --->
