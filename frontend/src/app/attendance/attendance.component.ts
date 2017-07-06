@@ -9,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 export class AttendanceComponent implements OnInit {
   scheduleID: string;
 
-  constructor(route: ActivatedRoute) { // 2
-    this.scheduleID = route.snapshot.params['id']; // 3
+  constructor(route: ActivatedRoute) {
+    this.scheduleID = route.snapshot.params['id'];
   }
 
   ngOnInit() {

@@ -11,15 +11,15 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-      path: 'connect',
-      component: ConnectComponent
+    path: 'connect',
+    component: ConnectComponent
   },
   {
     path: 'attendance/:id',
     component: AttendanceComponent
   },
   {
-    path: 'register',
+    path: 'register/:tag',
     component: RegisterComponent
   }
 ];

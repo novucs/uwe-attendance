@@ -1,1 +1,16 @@
-<p>register works!</p>
+<div class="container">
+  <h2>Registration Form</h2><br />
+
+  <div class="form-group">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <input type="text" class="form-control" name="first" placeholder="First Name" ngModel required #first="ngModel"><br />
+      <input type="text" class="form-control" name="last" placeholder="Last Name" ngModel required #last="ngModel"><br />
+      <button type="submit" class="btn btn-success" value="Submit">Submit</button>
+    </form>
+  </div>
+
+  <p>First name value: {{ first.value }}</p>
+  <p>Last name value: {{ last.value }}</p>
+  <p>Form value: {{ f.value | json }}</p>
+  <p>Form valid: {{ f.valid }}</p>
+</div>
