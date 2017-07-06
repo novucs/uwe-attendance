@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/es6-promise": "0.0.32",
     "bindings": "^1.2.1",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
@@ -20,5 +21,8 @@
     "streaming-worker": "^1.0.1",
     "streaming-worker-sdk": "^0.9.3",
     "ws": "^2.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.7"
   }
 }

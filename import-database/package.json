@@ -1,0 +1,14 @@
+{
+  "name": "import-database",
+  "version": "1.0.0",
+  "description": "Imports a list of names into the database",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "mongoose": "^4.11.1"
+  }
+}

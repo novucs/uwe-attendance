@@ -31,7 +31,7 @@ import {
 // Create a new express application instance
 const app: express.Application = express();
 // The port the express app will listen on
-const port: number = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/attendance");
@@ -62,7 +62,7 @@ app.listen(port, () => {
 // now setup the NFC reader, via WebSocket
 const portNFC_ = 3001
 
-let portNFC: number = process.env.PORT || portNFC_
+let portNFC = process.env.PORT || portNFC_
 let WebSocketServer = WebSocket.Server
 let server = new WebSocketServer({ port: portNFC })
 
