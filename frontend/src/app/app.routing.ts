@@ -2,24 +2,27 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConnectComponent } from './connect/connect.component';
 import { AttendanceComponent } from './attendance/attendance.component';
+import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
-  {
-      path: 'connect',
-      component: ConnectComponent,
-  },
   {
     path: '',
     redirectTo: '/connect',
     pathMatch: 'full'
   },
   {
+      path: 'connect',
+      component: ConnectComponent
+  },
+  {
     path: 'attendance/:id',
     component: AttendanceComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   }
+];
 
-//  { path: '**', component: PageNotFoundComponent }
-];
-export const appRoutingProviders: any[] = [
-];
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const appRoutingProviders: any[] = [];

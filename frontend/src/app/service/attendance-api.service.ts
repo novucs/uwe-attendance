@@ -17,11 +17,43 @@ export class AttendanceApiService {
   createSchedule(schedule: Schedule) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post('/api/student', JSON.stringify(schedule), options)
+    return this.http.post('/api/schedule', JSON.stringify(schedule), options)
       .subscribe(data => {
-        console.log("Successfully created schedule");
+        console.log('Successfully created schedule');
       }, error => {
-        console.log(error);
+        console.log(error.json());
+      });
+  }
+
+  getStudents() {
+    return this.http.get('/api/student')
+      .map(res => res.json());
+  }
+
+  createStudent(student: Student) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('/api/student', JSON.stringify(student), options)
+      .subscribe(data => {
+        console.log('Successfully created student');
+      }, error => {
+        console.log(error.json());
+      });
+  }
+
+  getAttendance() {
+    return this.http.get('/api/attendance')
+      .map(res => res.json());
+  }
+
+  createAttendance(attendance: Attendance) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('/api/attendance', JSON.stringify(attendance), options)
+      .subscribe(data => {
+        console.log('Successfully created attendance');
+      }, error => {
+        console.log(error.json());
       });
   }
 }
@@ -29,4 +61,14 @@ export class AttendanceApiService {
 interface Schedule {
   event: string;
   onDate: Date;
+}
+
+interface Student {
+  tag: string;
+  name: string;
+}
+
+interface Attendance {
+  tag: string;
+  sessionId: string;
 }
