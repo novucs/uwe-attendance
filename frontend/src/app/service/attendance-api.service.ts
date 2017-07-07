@@ -14,12 +14,12 @@ export class AttendanceApiService {
       .map(res => res.json());
   }
 
-  createSchedule(schedule: Schedule) {
+  updateSchedule(schedule: Schedule) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post('/api/schedule', JSON.stringify(schedule), options)
       .subscribe(data => {
-        console.log('Successfully created schedule');
+        console.log('Successfully updated schedule');
       }, error => {
         console.log(error.json());
       });
@@ -30,12 +30,12 @@ export class AttendanceApiService {
       .map(res => res.json());
   }
 
-  createStudent(student: Student) {
+  updateStudent(student: Student) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post('/api/student', JSON.stringify(student), options)
       .subscribe(data => {
-        console.log('Successfully created student');
+        console.log('Successfully updated student');
       }, error => {
         console.log(error.json());
       });
@@ -46,29 +46,29 @@ export class AttendanceApiService {
       .map(res => res.json());
   }
 
-  createAttendance(attendance: Attendance) {
+  updateAttendance(attendance: Attendance) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post('/api/attendance', JSON.stringify(attendance), options)
       .subscribe(data => {
-        console.log('Successfully created attendance');
+        console.log('Successfully updated attendance');
       }, error => {
         console.log(error.json());
       });
   }
 }
 
-interface Schedule {
+export interface Schedule {
   event: string;
   onDate: Date;
 }
 
-interface Student {
+export interface Student {
   tag: string;
   name: string;
 }
 
-interface Attendance {
+export interface Attendance {
   tag: string;
   sessionId: string;
 }

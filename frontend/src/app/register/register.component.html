@@ -3,7 +3,8 @@
 
   <br />
 
-  <ng2-completer
+  <div *ngIf="!registered">
+    <ng2-completer
     [(ngModel)]="fullName"
     [datasource]="allowedNames"
     [minSearchLength]="0"
@@ -13,14 +14,19 @@
     autofocus=true
     clearUnselected=true
     required>
-  </ng2-completer>
+    </ng2-completer>
 
-  <br />
+    <br />
 
-  <button
-   type="submit"
-   class="{{ 'btn ' + (isNameValid() ? 'btn-success' : 'disabled') }}"
-   (click)="onSubmit()">
-   Submit
- </button>
+    <button
+    type="submit"
+    class="{{ 'btn ' + (isNameValid() ? 'btn-success' : 'disabled') }}"
+    (click)="onSubmit()">
+    Submit
+    </button>
+  </div>
+
+  <div *ngIf="registered">
+    You have already registered!
+  </div>
 </div>
