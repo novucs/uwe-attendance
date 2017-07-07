@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AttendanceApiService,
          Student,
          Schedule,
@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   registered: boolean;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private api: AttendanceApiService) {
     this.tag = route.snapshot.params['tag'];
   }
@@ -37,6 +38,11 @@ export class RegisterComponent implements OnInit {
     };
 
     this.api.updateStudent(student);
+    this.registered = true;
+
+    setTimeout(() => {
+      this.router.navigate(['scan']);
+    }, 2000);
   }
 
   ngOnInit() {
