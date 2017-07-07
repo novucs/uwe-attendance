@@ -25,7 +25,7 @@ export class ScheduleAttendanceComponent implements OnInit {
       this.schedule.onDate = schedule.data.onDate;
 
       var datePipe = new DatePipe('en-UK');
-      this.date = datePipe.transform(this.schedule.onDate, 'dd/MM/yyyy @ hh:mm:ss');
+      this.date = datePipe.transform(this.schedule.onDate, 'dd/MM/yyyy @ HH:mm:ss');
     });
 
     this.api.getScheduleAttendance(this.scheduleId).subscribe(a => {
