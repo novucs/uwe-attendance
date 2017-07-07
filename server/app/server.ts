@@ -71,10 +71,6 @@ server.on('connection', ws => {
   ws.send("Hello there! :D");
 });
 
-setInterval(function() {
-
-}, 1000);
-
 //nfcReader.hello();
 nfcReader.addListener(nfcReader.receivedEvent, msg => {
     // broadcast msg (button press) to all listening sockets
