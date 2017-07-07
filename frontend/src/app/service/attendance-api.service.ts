@@ -35,6 +35,11 @@ export class AttendanceApiService {
       .map(res => res.json());
   }
 
+  getStudent(tag: string)  {
+    return this.http.get('/api/student/' + tag)
+      .map(res => res.json());
+  }
+
   updateStudent(student: Student) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -74,6 +79,6 @@ export interface Student {
 }
 
 export interface Attendance {
-  tag: string;
-  sessionId: string;
+  scheduleId: string;
+  studentId: string;
 }

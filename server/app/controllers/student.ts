@@ -58,17 +58,18 @@ router.get('/student', (req: Request, res: Response) => {
   });
 });
 
-// find by name
-router.get('/student/:name', (req: Request, res: Response) => {
-    var query = { name: req.params.name};
+// find by tag
+router.get('/student/:tag', (req: Request, res: Response) => {
+    var query = { tag: req.params.tag };
     student.findOne(query, (err, Student) => {
         if (err) {
             res.json({info: 'error during find User', error: err});
-        };
+        }
+
         if (Student) {
             res.json({info: 'Student found successfully', data: Student});
         } else {
-            res.json({info: 'Student not found with name:'+ req.params.name});
+            res.json({info: 'Student not found with tag: '+ req.params.tag});
         }
     });
 });

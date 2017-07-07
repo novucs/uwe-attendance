@@ -24,7 +24,7 @@ const appRoutes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'scan',
+    path: 'scan/:scheduleId',
     component: ScanComponent
   }
 ];
