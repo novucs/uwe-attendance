@@ -32,15 +32,15 @@ export class ScanComponent implements OnInit {
           // If the student does not currently exist in the database,
           // create them.
           if (!s.data) {
-            this.router.navigateByUrl('/register/' + tag);
+            this.router.navigate(['/register', this.scheduleId, tag]);
             return;
           }
 
           // Set the state to scanned and save the attendance record.
           this.scanned = true;
           var record: Attendance = {
-            scheduleId: this.scheduleId,
-            studentId: s.data._id
+            sessionId: this.scheduleId,
+            tag: tag
           };
           this.api.updateAttendance(record);
 

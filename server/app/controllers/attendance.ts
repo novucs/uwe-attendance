@@ -55,7 +55,7 @@ router.put('/attendance', function (req: Request, res: Response) {
               var query = {'student': studentId, 'schedule': scheduleId};
 
               // we allow update to itself (this is the case when student
-              // swipes id more than once), but normally it will insert a 
+              // swipes id more than once), but normally it will insert a
               // new row for attendance for a given session.
               attendance.findOneAndUpdate(
                 query,

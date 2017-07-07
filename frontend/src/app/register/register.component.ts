@@ -13,6 +13,7 @@ import { AttendanceApiService,
 export class RegisterComponent implements OnInit {
 
   tag: string;
+  scheduleId: string;
   allowedNames: string[] = [];
   fullName: string = "";
   registered: boolean;
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private api: AttendanceApiService) {
+    this.scheduleId = route.snapshot.params['scheduleId'];
     this.tag = route.snapshot.params['tag'];
   }
 
@@ -38,10 +40,16 @@ export class RegisterComponent implements OnInit {
     };
 
     this.api.updateStudent(student);
+
     this.registered = true;
+    var record: Attendance = {
+      sessionId: this.scheduleId,
+      tag: this.tag
+    };
+    this.api.updateAttendance(record);
 
     setTimeout(() => {
-      this.router.navigate(['scan']);
+      this.router.navigate(['/scan', this.scheduleId]);
     }, 2000);
   }
 

@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     component: AttendanceComponent
   },
   {
-    path: 'register/:tag',
+    path: 'register/:scheduleId/:tag',
     component: RegisterComponent
   },
   {

@@ -24,9 +24,9 @@ export class AttendanceApiService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post('/api/schedule', JSON.stringify(schedule), options)
       .subscribe(data => {
-        console.log('Successfully updated schedule');
+        console.log(data.json());
       }, error => {
-        console.log(error.json());
+        console.log(error);
       });
   }
 
@@ -45,9 +45,9 @@ export class AttendanceApiService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post('/api/student', JSON.stringify(student), options)
       .subscribe(data => {
-        console.log('Successfully updated student');
+        console.log(data.json());
       }, error => {
-        console.log(error.json());
+        console.log(error);
       });
   }
 
@@ -59,11 +59,11 @@ export class AttendanceApiService {
   updateAttendance(attendance: Attendance) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post('/api/attendance', JSON.stringify(attendance), options)
+    return this.http.put('/api/attendance', JSON.stringify(attendance), options)
       .subscribe(data => {
-        console.log('Successfully updated attendance');
+        console.log(data.json());
       }, error => {
-        console.log(error.json());
+        console.log(error);
       });
   }
 }
@@ -79,6 +79,6 @@ export interface Student {
 }
 
 export interface Attendance {
-  scheduleId: string;
-  studentId: string;
+  sessionId: string;
+  tag: string;
 }
