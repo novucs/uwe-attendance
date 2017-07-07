@@ -1,7 +1,8 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConnectComponent } from './connect/connect.component';
-import { AttendanceComponent } from './attendance/attendance.component';
+import { ScheduleAttendanceComponent } from './schedule-attendance/schedule-attendance.component';
+import { StudentAttendanceComponent } from './student-attendance/student-attendance.component';
 import { RegisterComponent } from './register/register.component';
 import { ScanComponent } from './scan/scan.component';
 
@@ -16,8 +17,12 @@ const appRoutes: Routes = [
     component: ConnectComponent
   },
   {
-    path: 'attendance/:id',
-    component: AttendanceComponent
+    path: 'schedule-attendance/:scheduleId',
+    component: ScheduleAttendanceComponent
+  },
+  {
+    path: 'student-attendance/:studentId',
+    component: StudentAttendanceComponent
   },
   {
     path: 'register/:scheduleId/:tag',
