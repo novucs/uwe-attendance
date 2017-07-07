@@ -54,7 +54,7 @@
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <div class="row" *ngFor="let student of students">
-          <a class="dropdown-item" [routerLink]="['/attendance', student._id]">{{schedule.event}} on {{schedule.onDate}}</a>
+          <a class="dropdown-item" [routerLink]="['/attendance', student._id]">{{student.name}}</a>
         </div>
       </div>
     </div>
