@@ -51,13 +51,8 @@ fs.readFile('./schedule.csv', 'utf8', function (err, data) {
     }
 
     var parts = schedule.split(',');
-    var dateParts = parts[1].split('-');
-    var year = dateParts[0];
-    var month = dateParts[1] - 1;
-    var day = dateParts[2];
-
-    const onDate = new Date(year, month, day);
     const event = parts[0];
+    const onDate = new Date(parts[1]);
 
     mongoose.model("schedule", scheduleSchema).findOneAndUpdate(
       {'event': event},
