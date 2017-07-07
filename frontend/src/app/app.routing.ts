@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ConnectComponent } from './connect/connect.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { RegisterComponent } from './register/register.component';
+import { ScanComponent } from './scan/scan.component';
 
 const appRoutes: Routes = [
   {
@@ -21,6 +22,10 @@ const appRoutes: Routes = [
   {
     path: 'register/:tag',
     component: RegisterComponent
+  },
+  {
+    path: 'scan',
+    component: ScanComponent
   }
 ];
 

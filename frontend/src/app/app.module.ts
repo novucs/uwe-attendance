@@ -12,13 +12,15 @@ import { AppComponent } from './app.component';
 import { ConnectComponent } from './connect/connect.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { RegisterComponent } from './register/register.component';
+import { ScanComponent } from './scan/scan.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConnectComponent,
     AttendanceComponent,
-    RegisterComponent
+    RegisterComponent,
+    ScanComponent
   ],
   imports: [
     BrowserModule,
