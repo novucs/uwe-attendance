@@ -60,20 +60,23 @@ app.listen(port, () => {
 });
 
 // now setup the NFC reader, via WebSocket
-const portNFC_ = 3001
+const portNFC_ = 3001;
 
-let portNFC = process.env.PORT || portNFC_
-let WebSocketServer = WebSocket.Server
-let server = new WebSocketServer({ port: portNFC })
+let portNFC = process.env.PORT || portNFC_;
+let WebSocketServer = WebSocket.Server;
+let server = new WebSocketServer({ port: portNFC });
 
 server.on('connection', ws => {
+  console.log("ws conntection made");
+  ws.send("Hello there! :D");
+});
 
-  console.log("ws conntection made")
+setInterval(function() {
 
-})
+}, 1000);
 
 //nfcReader.hello();
 nfcReader.addListener(nfcReader.receivedEvent, msg => {
     // broadcast msg (button press) to all listening sockets
-    console.log(msg)
+    console.log(msg);
 });
