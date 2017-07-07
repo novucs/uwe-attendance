@@ -10,14 +10,13 @@ import { AttendanceApiService } from '../service/attendance-api.service';
 export class ConnectComponent implements OnInit {
 
   schedules: any = [];
-  msg : string = "none";
 
   constructor(private attendanceApiService: AttendanceApiService) {
   }
 
   ngOnInit() {
     // Retrieve posts from the API
-    this.attendanceApiService.getSchedules().subscribe(s => {
+    this.attendanceApiService.getCurrentSchedules().subscribe(s => {
       this.schedules = s.data;
     });
   }

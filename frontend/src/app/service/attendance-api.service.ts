@@ -14,6 +14,11 @@ export class AttendanceApiService {
       .map(res => res.json());
   }
 
+  getCurrentSchedules() {
+    return this.http.get('/api/currentSchedule')
+      .map(res => res.json());
+  }
+
   updateSchedule(schedule: Schedule) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
