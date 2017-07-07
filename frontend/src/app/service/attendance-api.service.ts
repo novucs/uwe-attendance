@@ -14,8 +14,13 @@ export class AttendanceApiService {
       .map(res => res.json());
   }
 
+  getSchedule(id: string) {
+    return this.http.get('/api/schedule/' + id)
+      .map(res => res.json());
+  }
+
   getCurrentSchedules() {
-    return this.http.get('/api/currentSchedule')
+    return this.http.get('/api/current-schedule')
       .map(res => res.json());
   }
 
@@ -53,6 +58,11 @@ export class AttendanceApiService {
 
   getAttendance() {
     return this.http.get('/api/attendance')
+      .map(res => res.json());
+  }
+
+  getScheduleAttendance(sessionId: string) {
+    return this.http.get('/api/session-attendance/' + sessionId)
       .map(res => res.json());
   }
 

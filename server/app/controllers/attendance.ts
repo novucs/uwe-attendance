@@ -39,6 +39,16 @@ router.get('/attendance', (req: Request, res: Response) => {
   });
 });
 
+router.get('/session-attendance/:sessionId', (req: Request, res: Response) => {
+  var query = { sessionId: req.params.sessionId };
+  attendance.find(query, (err, Attendances) => {
+      if (err) {
+          res.json({info: 'error during find Attendances', error: err});
+      };
+      res.json({info: 'Attendances found successfully', data: Attendances});
+  });
+});
+
 router.put('/attendance', function (req: Request, res: Response) {
   //console.log("booo " + JSON.stringify(req.body))
     if (req.body.tag && req.body.sessionId) {
