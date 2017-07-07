@@ -27,13 +27,32 @@ var schedule = mongoose.model<IScheduleModel>("schedule", scheduleSchema);
 
 export const Schedule = schedule;
 
+router.get('/currentSchedule', (req: Request, res: Response) => {
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  var query = {onDate: {
+    "$gte": yesterday,
+    "$lt": tomorrow
+  }};
+
+  schedule.find(query, (err, Schedules) => {
+    if (err) {
+        res.json({info: 'error during find Schedules', error: err});
+    }
+    res.json({info: 'Schedules.. found successfully', data: Schedules});
+  });
+});
+
 /* Read all */
 router.get('/schedule', (req: Request, res: Response) => {
   schedule.find((err, Schedules) => {
-      if (err) {
-          res.json({info: 'error during find Schedules', error: err});
-      };
-      res.json({info: 'Schedules.. found successfully', data: Schedules});
+    if (err) {
+        res.json({info: 'error during find Schedules', error: err});
+    }
+    res.json({info: 'Schedules.. found successfully', data: Schedules});
   });
 });
 

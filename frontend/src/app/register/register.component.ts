@@ -44,7 +44,6 @@ export class RegisterComponent implements OnInit {
       this.allowedNames = [];
       var registeredTags: string[] = [];
       for (var i in s.data) {
-        console.log(s.data[i].tag);
         if (s.data[i].tag == 'unknown') {
           this.allowedNames.push(s.data[i].name);
         } else {
