@@ -1,5 +1,0 @@
-build
-node_modules
-typings
-*.log
-package-lock.json

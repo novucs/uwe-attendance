@@ -1,18 +1,15 @@
 {
-  "name": "test",
+  "name": "uwe-attendance-server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "gypfile": true,
+  "license": "MIT",
+  "private": true,
+  "description": "Server for the UWE attendance system",
   "scripts": {
     "start": "node ./build/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@types/es6-promise": "0.0.32",
     "bindings": "^1.2.1",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
@@ -23,6 +20,6 @@
     "ws": "^2.2.3"
   },
   "devDependencies": {
-    "@types/node": "^8.0.7"
+    "@types/node": "^8.0.9"
   }
 }

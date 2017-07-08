@@ -1,0 +1,27 @@
+{
+  "project": {
+    "name": "uwe-attendance-public"
+  },
+  "apps": [
+    {
+      "prefix": "main",
+      "root": "src",
+      "outDir": "build",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "styles": [
+        "styles.css"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+.idea/
+public/build/
+public/node_modules/
+public/package-lock.json
+scripts/build/
+scripts/node_modules/
+scripts/package-lock.json
+server/build/
+server/node_modules/
+server/package-lock.json

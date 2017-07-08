@@ -4,8 +4,11 @@
     "baseUrl": "src",
     "outDir": "build",
     "target": "es5",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
     "lib": [
-      "es2015"
+      "es2015",
+      "dom"
     ]
   }
 }

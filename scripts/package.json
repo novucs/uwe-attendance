@@ -1,0 +1,17 @@
+{
+  "name": "uwe-attendance-scripts",
+  "version": "1.0.0",
+  "main": "run.js",
+  "license": "MIT",
+  "private": true,
+  "description": "Useful scripts for the UWE attendance system",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mongoose": "^4.11.1"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.9"
+  }
+}
