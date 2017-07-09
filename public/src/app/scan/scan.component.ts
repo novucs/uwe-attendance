@@ -5,8 +5,7 @@ import { $WebSocket, WebSocketSendMode } from 'angular2-websocket/angular2-webso
 
 @Component({
   selector: 'app-scan',
-  templateUrl: './scan.component.html',
-  styleUrls: ['./scan.component.css']
+  templateUrl: './scan.component.html'
 })
 export class ScanComponent implements OnInit {
 

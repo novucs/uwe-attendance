@@ -1,10 +1,9 @@
 {
   "name": "uwe-attendance-public",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "main.bundle.js",
   "license": "MIT",
   "private": true,
-  "description": "Frontend for the UWE attendance system",
   "scripts": {
     "build": "ng build"
   },

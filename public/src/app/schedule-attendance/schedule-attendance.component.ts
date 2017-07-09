@@ -5,8 +5,7 @@ import { AttendanceApiService, Schedule, Attendance, Student } from '../service/
 
 @Component({
   selector: 'app-schedule-attendance',
-  templateUrl: './schedule-attendance.component.html',
-  styleUrls: ['./schedule-attendance.component.css']
+  templateUrl: './schedule-attendance.component.html'
 })
 export class ScheduleAttendanceComponent implements OnInit {
   scheduleId: string;

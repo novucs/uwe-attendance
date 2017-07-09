@@ -4,8 +4,7 @@ import { AttendanceApiService } from '../service/attendance-api.service';
 
 @Component({
   selector: 'app-connect',
-  templateUrl: './connect.component.html',
-  styleUrls: ['./connect.component.css']
+  templateUrl: './connect.component.html'
 })
 export class ConnectComponent implements OnInit {
 
