@@ -59,7 +59,7 @@ export class AttendanceApiService {
             .map(res => res.json());
     }
 
-    getStudentsInGroups(groups: string[]) {
+    getStudentsByGroups(groups: string[]) {
         return this.http.get("/api/student/groups/" + groups.join(','))
             .map(res => res.json());
     }

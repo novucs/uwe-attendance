@@ -27,7 +27,7 @@ export class SessionAttendanceComponent implements OnInit {
             const datePipe = new DatePipe("en-UK");
             this.date = datePipe.transform(this.session.onDate, "dd/MM/yyyy @ HH:mm:ss");
 
-            this.api.getStudentsInGroups(this.session.groups).subscribe(reply => {
+            this.api.getStudentsByGroups(this.session.groups).subscribe(reply => {
                 this.students = reply.data;
 
                 this.api.getSessionAttendances(this.sessionId).subscribe(reply => {
