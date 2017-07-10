@@ -1,8 +1,8 @@
 import {Request, Response, Router} from "express";
-import {Document, model, ObjectId, Schema} from "mongoose";
+import {Document, model, Schema} from "mongoose";
 
 export interface Session {
-    _id: ObjectId;
+    _id: Schema.Types.ObjectId;
     event: string;
     onDate: Date;
 }

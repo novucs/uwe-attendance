@@ -1,8 +1,8 @@
 import {Request, Response, Router} from "express";
-import {Document, model, ObjectId, Schema} from "mongoose";
+import {Document, model, Schema} from "mongoose";
 
 export interface Student {
-    _id: ObjectId;
+    _id: Schema.Types.ObjectId;
     tag: string;
     name: string;
 }

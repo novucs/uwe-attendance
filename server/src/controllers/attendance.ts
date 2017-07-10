@@ -1,20 +1,20 @@
 import {Request, Response, Router} from "express";
-import {Document, model, ObjectId, Schema} from "mongoose";
+import {Document, model, Schema} from "mongoose";
 import {findSessionById} from "./schedule";
 import {findStudentByTag} from "./student";
 
 export interface Attendance {
-    _id: ObjectId;
-    student: ObjectId;
-    schedule: ObjectId;
+    _id: Schema.Types.ObjectId;
+    student: Schema.Types.ObjectId;
+    schedule: Schema.Types.ObjectId;
 }
 
 export interface AttendanceModel extends Attendance, Document {
 }
 
 export const attendanceSchema = new Schema({
-    student: ObjectId,
-    schedule: ObjectId,
+    student: Schema.Types.ObjectId,
+    schedule: Schema.Types.ObjectId,
 }, {collection: "attendance"});
 
 export const attendanceModel = model<AttendanceModel>("attendance", attendanceSchema);
