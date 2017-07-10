@@ -12,8 +12,9 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="row" *ngFor="let schedule of sessionsToday">
-                <a class="dropdown-item" [routerLink]="['/scan', schedule._id]">{{schedule.event}} on
-                    {{schedule.onDate}}</a>
+                <a class="dropdown-item" [routerLink]="['/scan', schedule._id]">
+                    {{ schedule.event }} on {{ formatDate(schedule.onDate) }}
+                </a>
             </div>
         </div>
     </div>
@@ -32,8 +33,9 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="row" *ngFor="let schedule of sessions">
-                <a class="dropdown-item" [routerLink]="['/attendance/session', schedule._id]">{{schedule.event}} on
-                    {{schedule.onDate}}</a>
+                <a class="dropdown-item" [routerLink]="['/attendance/session', schedule._id]">
+                    {{ schedule.event }} on {{ formatDate(schedule.onDate) }}
+                </a>
             </div>
         </div>
     </div>
@@ -52,7 +54,9 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="row" *ngFor="let student of students">
-                <a class="dropdown-item" [routerLink]="['/attendance/student', student._id]">{{student.name}}</a>
+                <a class="dropdown-item" *ngIf="student.tag" [routerLink]="['/attendance/student', student.tag]">
+                    {{ student.name }}
+                </a>
             </div>
         </div>
     </div>

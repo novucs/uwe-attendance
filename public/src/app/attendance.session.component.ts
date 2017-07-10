@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {DatePipe} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {Attendance, AttendanceApiService, Session, Student} from "./api.service";
 
@@ -20,12 +19,14 @@ export class SessionAttendanceComponent implements OnInit {
         this.sessionId = route.snapshot.params["sessionId"];
     }
 
+    formatDate(date: Date) {
+        return this.api.formatDate(date);
+    }
+
     ngOnInit() {
         this.api.getSession(this.sessionId).subscribe(reply => {
             this.session = reply.data;
-
-            const datePipe = new DatePipe("en-UK");
-            this.date = datePipe.transform(this.session.onDate, "dd/MM/yyyy @ HH:mm:ss");
+            this.date = this.formatDate(this.session.onDate);
 
             this.api.getStudentsByGroups(this.session.groups).subscribe(reply => {
                 this.students = reply.data;

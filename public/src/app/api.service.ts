@@ -1,11 +1,17 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions} from "@angular/http";
 import "rxjs/add/operator/map";
+import {DatePipe} from "@angular/common";
 
 @Injectable()
 export class AttendanceApiService {
 
     constructor(private http: Http) {
+    }
+
+    formatDate(date: Date) {
+        const datePipe = new DatePipe("en-UK");
+        return datePipe.transform(date, "dd/MM/yyyy @ HH:mm:ss");
     }
 
     getAllAttendances() {
@@ -15,6 +21,11 @@ export class AttendanceApiService {
 
     getSessionAttendances(sessionId: string) {
         return this.http.get("/api/attendance/session/" + sessionId)
+            .map(res => res.json());
+    }
+
+    getStudentAttendances(tag: string) {
+        return this.http.get("/api/attendance/student/" + tag)
             .map(res => res.json());
     }
 
@@ -46,6 +57,11 @@ export class AttendanceApiService {
 
     getSession(id: string) {
         return this.http.get("/api/schedule/id/" + id)
+            .map(res => res.json());
+    }
+
+    getSessionsByGroups(groups: string[]) {
+        return this.http.get("/api/schedule/groups/" + groups.join(','))
             .map(res => res.json());
     }
 

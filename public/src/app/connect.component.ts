@@ -14,6 +14,10 @@ export class ConnectComponent implements OnInit {
     constructor(private api: AttendanceApiService) {
     }
 
+    formatDate(date: Date) {
+        return this.api.formatDate(date);
+    }
+
     ngOnInit() {
         this.api.getSessionsToday().subscribe(reply => {
             this.sessionsToday = reply.data;

@@ -41,26 +41,6 @@ studentRouter.post("/student/tag", (request: Request, response: Response) => upd
     .catch(error => response.json({info: "Error during student update", error: error})));
 
 /**
- * Finds all students within specific groups.
- * @param groups the groups to search for.
- * @returns {Promise<Student[]>} the promised students.
- */
-export function findStudentsByGroups(groups: string[]): Promise<Student[]> {
-    return new Promise<Student[]>((fulfill, reject) => {
-        const query = {"groups": {$in: groups}};
-
-        studentModel.find(query, (error, students) => {
-            if (error) {
-                reject(error);
-                return;
-            }
-
-            fulfill(students);
-        })
-    });
-}
-
-/**
  * Finds all students.
  * @returns {Promise<Student[]>} the promised students.
  */
@@ -89,7 +69,7 @@ export function findStudentByTag(tag: string): Promise<Student> {
             return;
         }
 
-        const query = {tag: tag};
+        const query = {"tag": tag};
 
         studentModel.findOne(query, (error, student) => {
             if (error) {
@@ -134,6 +114,31 @@ export function findStudentByName(name: string): Promise<Student> {
 
             fulfill(student);
         });
+    });
+}
+
+/**
+ * Finds all students within specific groups.
+ * @param groups the groups to search for.
+ * @returns {Promise<Student[]>} the promised students.
+ */
+export function findStudentsByGroups(groups: string[]): Promise<Student[]> {
+    return new Promise<Student[]>((fulfill, reject) => {
+        if (!groups) {
+            reject("No groups provided");
+            return;
+        }
+
+        const query = {"groups": {$in: groups}};
+
+        studentModel.find(query, (error, students) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(students);
+        })
     });
 }
 

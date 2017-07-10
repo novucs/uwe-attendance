@@ -1,4 +1,4 @@
-<h2>Attendance for {{ session.event }} on {{ date }}</h2>
+<h2>Attendance for {{ session.event }} on {{ formatDate(session.onDate) }}</h2>
 <h3>Attended</h3>
 <ul>
     <li *ngFor="let student of attended">

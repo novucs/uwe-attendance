@@ -32,6 +32,10 @@ scheduleRouter.get("/schedule/id/:id", (request: Request, response: Response) =>
     .then(data => response.json({info: "Session found successfully", data: data}))
     .catch(error => response.json({info: "Error during find session by ID", error: error})));
 
+scheduleRouter.get("/schedule/groups/:groups", (request: Request, response: Response) => findSessionsByGroups(request.params.groups.split(','))
+    .then(data => response.json({info: "Sessions found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find sessions by groups", error: error})));
+
 /**
  * Finds all sessions.
  * @returns {Promise<Session[]>} the promised sessions.
@@ -102,4 +106,28 @@ export function findSessionById(sessionId: string): Promise<Session> {
             fulfill(session);
         });
     });
+}
+
+/**
+ * Inclusively finds sessions within specific groups.
+ * @param groups the groups to search for.
+ * @returns {Promise<Session[]>} the promised sessions.
+ */
+export function findSessionsByGroups(groups: string[]): Promise<Session[]> {
+    return new Promise<Session[]>((fulfill, reject) => {
+        if (!groups) {
+            reject("No groups provided");
+            return;
+        }
+
+        const query = {"groups": {$in: groups}};
+        scheduleModel.find(query, (error, students) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(students);
+        });
+    })
 }

@@ -28,6 +28,10 @@ attendanceRouter.get("/attendance/session/:sessionId", (request: Request, respon
     .then(data => response.json({info: "Session attendances found successfully", data: data}))
     .catch(error => response.json({info: "Error during find session attendances", error: error})));
 
+attendanceRouter.get("/attendance/student/:studentTag", (request: Request, response: Response) => findStudentAttendances(request.params.studentTag)
+    .then(data => response.json({info: "Student attendances found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find student attendances", error: error})));
+
 attendanceRouter.put("/attendance", (request: Request, response: Response) => updateAttendance(request.body.sessionId, request.body.studentTag)
     .then(data => response.json({info: "Attendance saved successfully", data: data}))
     .catch(error => response.json({info: "Error during attendance update", error: error})));
@@ -72,6 +76,31 @@ export function findSessionAttendances(sessionId: string): Promise<Attendance[]>
             fulfill(attendances);
         });
     });
+}
+
+/**
+ * Finds all attendances for a specific student.
+ * @param studentTag the session to search for.
+ * @returns {Promise<Attendance[]>} the promised attendances.
+ */
+export function findStudentAttendances(studentTag: string): Promise<Attendance[]> {
+    return new Promise<Attendance[]>((fulfill, reject) => {
+        if (!studentTag) {
+            reject("No student tag provided");
+            return;
+        }
+
+        const query = {studentTag: studentTag};
+
+        attendanceModel.find(query, (error, attendances) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(attendances);
+        });
+    })
 }
 
 /**

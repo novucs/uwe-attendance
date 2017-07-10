@@ -21,7 +21,7 @@ const appRoutes: Routes = [
         component: SessionAttendanceComponent
     },
     {
-        path: "attendance/student/:studentId",
+        path: "attendance/student/:studentTag",
         component: StudentAttendanceComponent
     },
     {
