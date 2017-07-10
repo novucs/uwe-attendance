@@ -5,19 +5,19 @@ import {HttpModule} from "@angular/http";
 import {Ng2CompleterModule} from "ng2-completer";
 
 import {appRoutingProviders, routing} from "./app.routing";
-import {AttendanceApiService} from "./service/attendance-api.service";
+import {AttendanceApiService} from "./api.service";
 import {AppComponent} from "./app.component";
-import {ConnectComponent} from "./connect/connect.component";
-import {ScheduleAttendanceComponent} from "./schedule-attendance/schedule-attendance.component";
-import {StudentAttendanceComponent} from "./student-attendance/student-attendance.component";
-import {RegisterComponent} from "./register/register.component";
-import {ScanComponent} from "./scan/scan.component";
+import {ConnectComponent} from "./connect.component";
+import {SessionAttendanceComponent} from "./attendance.session.component";
+import {StudentAttendanceComponent} from "./attendance.student.component";
+import {RegisterComponent} from "./register.component";
+import {ScanComponent} from "./scan.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         ConnectComponent,
-        ScheduleAttendanceComponent,
+        SessionAttendanceComponent,
         StudentAttendanceComponent,
         RegisterComponent,
         ScanComponent

@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AttendanceApiService} from "../service/attendance-api.service";
+import {AttendanceApiService} from "./api.service";
 
 @Component({
     selector: "app-register",

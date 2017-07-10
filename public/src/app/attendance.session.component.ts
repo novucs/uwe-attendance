@@ -1,13 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {DatePipe} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
-import {AttendanceApiService, Session} from "../service/attendance-api.service";
+import {AttendanceApiService, Session} from "./api.service";
 
 @Component({
-    selector: "app-schedule-attendance",
-    templateUrl: "./schedule-attendance.component.html"
+    selector: "app-attendance-session",
+    templateUrl: "./attendance.session.component.html"
 })
-export class ScheduleAttendanceComponent implements OnInit {
+export class SessionAttendanceComponent implements OnInit {
     sessionId: string;
     session: Session = {_id: '', event: '', onDate: new Date(), groups: []};
     attended: string[];

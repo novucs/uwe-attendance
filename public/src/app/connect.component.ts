@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {AttendanceApiService, Session, Student} from "../service/attendance-api.service";
+import {AttendanceApiService, Session, Student} from "./api.service";
 
 @Component({
     selector: "app-connect",

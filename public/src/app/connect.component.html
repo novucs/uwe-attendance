@@ -32,7 +32,7 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="row" *ngFor="let schedule of sessions">
-                <a class="dropdown-item" [routerLink]="['/schedule-attendance', schedule._id]">{{schedule.event}} on
+                <a class="dropdown-item" [routerLink]="['/attendance/session', schedule._id]">{{schedule.event}} on
                     {{schedule.onDate}}</a>
             </div>
         </div>
@@ -52,7 +52,7 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="row" *ngFor="let student of students">
-                <a class="dropdown-item" [routerLink]="['/student-attendance', student._id]">{{student.name}}</a>
+                <a class="dropdown-item" [routerLink]="['/attendance/student', student._id]">{{student.name}}</a>
             </div>
         </div>
     </div>

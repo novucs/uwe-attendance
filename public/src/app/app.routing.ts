@@ -1,10 +1,10 @@
 import {ModuleWithProviders} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {ConnectComponent} from "./connect/connect.component";
-import {ScheduleAttendanceComponent} from "./schedule-attendance/schedule-attendance.component";
-import {StudentAttendanceComponent} from "./student-attendance/student-attendance.component";
-import {RegisterComponent} from "./register/register.component";
-import {ScanComponent} from "./scan/scan.component";
+import {ConnectComponent} from "./connect.component";
+import {SessionAttendanceComponent} from "./attendance.session.component";
+import {StudentAttendanceComponent} from "./attendance.student.component";
+import {RegisterComponent} from "./register.component";
+import {ScanComponent} from "./scan.component";
 
 const appRoutes: Routes = [
     {
@@ -17,11 +17,11 @@ const appRoutes: Routes = [
         component: ConnectComponent
     },
     {
-        path: "schedule-attendance/:sessionId",
-        component: ScheduleAttendanceComponent
+        path: "attendance/session/:sessionId",
+        component: SessionAttendanceComponent
     },
     {
-        path: "student-attendance/:studentId",
+        path: "attendance/student/:studentId",
         component: StudentAttendanceComponent
     },
     {
