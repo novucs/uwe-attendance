@@ -9,19 +9,24 @@ export class AttendanceApiService {
     }
 
     getAllAttendances() {
-        return this.http.get('/api/attendance/all')
+        return this.http.get("/api/attendance/all")
             .map(res => res.json());
     }
 
     getSessionAttendances(sessionId: string) {
-        return this.http.get('/api/attendance/session/' + sessionId)
+        return this.http.get("/api/attendance/session/" + sessionId)
             .map(res => res.json());
     }
 
-    updateAttendance(attendance: Attendance) {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this.http.put('/api/attendance', JSON.stringify(attendance), options)
+    updateAttendance(sessionId: string, studentTag: string) {
+        const headers = new Headers({"Content-Type": "application/json"});
+        const options = new RequestOptions({headers: headers});
+        const body = JSON.stringify({
+            sessionId: sessionId,
+            studentTag: studentTag
+        });
+
+        return this.http.put("/api/attendance", body, options)
             .subscribe(data => {
                 console.log(data.json());
             }, error => {
@@ -29,31 +34,20 @@ export class AttendanceApiService {
             });
     }
 
-    getSchedules() {
-        return this.http.get('/api/schedule/all')
+    getSessions() {
+        return this.http.get("/api/schedule/all")
             .map(res => res.json());
     }
 
-    getScheduleToday() {
-        return this.http.get('/api/schedule/today')
+    getSessionsToday() {
+        return this.http.get("/api/schedule/today")
             .map(res => res.json());
     }
 
-    getSchedule(id: string) {
-        return this.http.get('/api/schedule/id/' + id)
+    getSession(id: string) {
+        return this.http.get("/api/schedule/id/" + id)
             .map(res => res.json());
     }
-
-    // updateSchedule(schedule: Schedule) {
-    //     let headers = new Headers({'Content-Type': 'application/json'});
-    //     let options = new RequestOptions({headers: headers});
-    //     return this.http.post('/api/schedule', JSON.stringify(schedule), options)
-    //         .subscribe(data => {
-    //             console.log(data.json());
-    //         }, error => {
-    //             console.log(error);
-    //         });
-    // }
 
     getAllStudents() {
         return this.http.get("/api/student/all")
@@ -65,10 +59,15 @@ export class AttendanceApiService {
             .map(res => res.json());
     }
 
-    updateStudentTag(student: Student) {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this.http.post('/api/student/tag', JSON.stringify(student), options)
+    updateStudentTag(name: string, tag: string) {
+        const headers = new Headers({"Content-Type": "application/json"});
+        const options = new RequestOptions({headers: headers});
+        const body = JSON.stringify({
+            name: name,
+            tag: tag
+        });
+
+        return this.http.post("/api/student/tag", body, options)
             .subscribe(data => {
                 console.log(data.json());
             }, error => {
@@ -77,17 +76,22 @@ export class AttendanceApiService {
     }
 }
 
-export interface Schedule {
+export interface Session {
+    _id: string;
     event: string;
     onDate: Date;
+    groups: string[];
 }
 
 export interface Student {
+    _id: string;
     tag: string;
     name: string;
+    groups: string[];
 }
 
 export interface Attendance {
+    _id: string;
     sessionId: string;
-    tag: string;
+    studentTag: string;
 }

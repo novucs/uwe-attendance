@@ -1,15 +1,15 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Attendance, AttendanceApiService, Student} from "../service/attendance-api.service";
+import {AttendanceApiService} from "../service/attendance-api.service";
 
 @Component({
-    selector: 'app-register',
-    templateUrl: './register.component.html'
+    selector: "app-register",
+    templateUrl: "./register.component.html"
 })
 export class RegisterComponent implements OnInit {
 
     tag: string;
-    scheduleId: string;
+    sessionId: string;
     allowedNames: string[] = [];
     fullName: string = "";
     registered: boolean;
@@ -17,8 +17,8 @@ export class RegisterComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private api: AttendanceApiService) {
-        this.scheduleId = route.snapshot.params['scheduleId'];
-        this.tag = route.snapshot.params['tag'];
+        this.sessionId = route.snapshot.params["sessionId"];
+        this.tag = route.snapshot.params["tag"];
     }
 
     isNameValid() {
@@ -30,22 +30,12 @@ export class RegisterComponent implements OnInit {
             return;
         }
 
-        const student: Student = {
-            tag: this.tag,
-            name: this.fullName
-        };
-
-        this.api.updateStudentTag(student);
-
+        this.api.updateStudentTag(this.fullName, this.tag);
+        this.api.updateAttendance(this.sessionId, this.tag);
         this.registered = true;
-        const record: Attendance = {
-            sessionId: this.scheduleId,
-            tag: this.tag
-        };
-        this.api.updateAttendance(record);
 
         setTimeout(() => {
-            this.router.navigate(['/scan', this.scheduleId]);
+            this.router.navigate(["/scan", this.sessionId]);
         }, 2000);
     }
 
@@ -54,7 +44,7 @@ export class RegisterComponent implements OnInit {
             this.allowedNames = [];
             const registeredTags: string[] = [];
             for (let i in s.data) {
-                if (s.data[i].tag == 'unknown') {
+                if (s.data[i].tag == "unknown") {
                     this.allowedNames.push(s.data[i].name);
                 } else {
                     registeredTags.push(s.data[i].tag);

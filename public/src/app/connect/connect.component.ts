@@ -1,29 +1,30 @@
 import {Component, OnInit} from "@angular/core";
-import {AttendanceApiService} from "../service/attendance-api.service";
+import {AttendanceApiService, Session, Student} from "../service/attendance-api.service";
 
 @Component({
-    selector: 'app-connect',
-    templateUrl: './connect.component.html'
+    selector: "app-connect",
+    templateUrl: "./connect.component.html"
 })
 export class ConnectComponent implements OnInit {
 
-    currentSchedules: any = [];
-    schedules: any = [];
-    students: any = [];
+    sessionsToday: Session[] = [];
+    sessions: Session[] = [];
+    students: Student[] = [];
 
     constructor(private api: AttendanceApiService) {
     }
 
     ngOnInit() {
-        // Retrieve posts from the API
-        this.api.getScheduleToday().subscribe(s => {
-            this.currentSchedules = s.data;
+        this.api.getSessionsToday().subscribe(reply => {
+            this.sessionsToday = reply.data;
         });
-        this.api.getSchedules().subscribe(s => {
-            this.schedules = s.data;
+
+        this.api.getSessions().subscribe(reply => {
+            this.sessions = reply.data;
         });
-        this.api.getAllStudents().subscribe(s => {
-            this.students = s.data;
+
+        this.api.getAllStudents().subscribe(reply => {
+            this.students = reply.data;
         });
     }
 }

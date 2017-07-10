@@ -5,16 +5,16 @@ import {findStudentByTag} from "./student";
 
 export interface Attendance {
     _id: Schema.Types.ObjectId;
-    student: Schema.Types.ObjectId;
-    schedule: Schema.Types.ObjectId;
+    sessionId: Schema.Types.ObjectId;
+    studentTag: string;
 }
 
 export interface AttendanceModel extends Attendance, Document {
 }
 
 export const attendanceSchema = new Schema({
-    student: Schema.Types.ObjectId,
-    schedule: Schema.Types.ObjectId,
+    sessionId: Schema.Types.ObjectId,
+    studentTag: String
 }, {collection: "attendance"});
 
 export const attendanceModel = model<AttendanceModel>("attendance", attendanceSchema);
@@ -28,7 +28,7 @@ attendanceRouter.get("/attendance/session/:sessionId", (request: Request, respon
     .then(data => response.json({info: "Session attendances found successfully", data: data}))
     .catch(error => response.json({info: "Error during find session attendances", error: error})));
 
-attendanceRouter.put("/attendance", (request: Request, response: Response) => updateAttendance(request.body.sessionId, request.body.tag)
+attendanceRouter.put("/attendance", (request: Request, response: Response) => updateAttendance(request.body.sessionId, request.body.studentTag)
     .then(data => response.json({info: "Attendance saved successfully", data: data}))
     .catch(error => response.json({info: "Error during attendance update", error: error})));
 
@@ -86,8 +86,8 @@ export function updateAttendance(sessionId: string, tag: string): Promise<Attend
 
     return Promise.all([sessionPromise, studentPromise]).then(([session, student]) => {
         return new Promise<Attendance>((fulfill, reject) => {
-            const query = {"session": session._id, "student": student._id};
-            const update = {"session": session._id, "student": student._id};
+            const query = {"sessionId": session._id, "studentTag": student._id};
+            const update = {"sessionId": session._id, "studentTag": student._id};
             const options = {upsert: true};
 
             attendanceModel.findOneAndUpdate(query, update, options, (error, attendance) => {

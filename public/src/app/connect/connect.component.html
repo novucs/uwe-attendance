@@ -5,14 +5,13 @@
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle"
                 type="button"
-                id="dropdownMenuButton"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">
             Select the current session
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <div class="row" *ngFor="let schedule of currentSchedules">
+            <div class="row" *ngFor="let schedule of sessionsToday">
                 <a class="dropdown-item" [routerLink]="['/scan', schedule._id]">{{schedule.event}} on
                     {{schedule.onDate}}</a>
             </div>
@@ -26,14 +25,13 @@
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle"
                 type="button"
-                id="dropdownMenuButton"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">
             Select a session
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <div class="row" *ngFor="let schedule of schedules">
+            <div class="row" *ngFor="let schedule of sessions">
                 <a class="dropdown-item" [routerLink]="['/schedule-attendance', schedule._id]">{{schedule.event}} on
                     {{schedule.onDate}}</a>
             </div>
@@ -47,7 +45,6 @@
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle"
                 type="button"
-                id="dropdownMenuButton"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">

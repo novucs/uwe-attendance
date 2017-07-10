@@ -8,28 +8,28 @@ import {ScanComponent} from "./scan/scan.component";
 
 const appRoutes: Routes = [
     {
-        path: '',
-        redirectTo: '/connect',
-        pathMatch: 'full'
+        path: "",
+        redirectTo: "/connect",
+        pathMatch: "full"
     },
     {
-        path: 'connect',
+        path: "connect",
         component: ConnectComponent
     },
     {
-        path: 'schedule-attendance/:scheduleId',
+        path: "schedule-attendance/:sessionId",
         component: ScheduleAttendanceComponent
     },
     {
-        path: 'student-attendance/:studentId',
+        path: "student-attendance/:studentId",
         component: StudentAttendanceComponent
     },
     {
-        path: 'register/:scheduleId/:tag',
+        path: "register/:sessionId/:tag",
         component: RegisterComponent
     },
     {
-        path: 'scan/:scheduleId',
+        path: "scan/:sessionId",
         component: ScanComponent
     }
 ];

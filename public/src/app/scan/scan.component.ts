@@ -1,21 +1,21 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Attendance, AttendanceApiService} from "../service/attendance-api.service";
+import {AttendanceApiService} from "../service/attendance-api.service";
 import {$WebSocket} from "angular2-websocket/angular2-websocket";
 
 @Component({
-    selector: 'app-scan',
-    templateUrl: './scan.component.html'
+    selector: "app-scan",
+    templateUrl: "./scan.component.html"
 })
 export class ScanComponent implements OnInit {
 
     scanned: boolean = false;
-    scheduleId: string;
+    sessionId: string;
 
     constructor(private route: ActivatedRoute,
                 private api: AttendanceApiService,
                 private router: Router) {
-        this.scheduleId = route.snapshot.params['scheduleId'];
+        this.sessionId = route.snapshot.params["sessionId"];
     }
 
     ngOnInit() {
@@ -31,17 +31,13 @@ export class ScanComponent implements OnInit {
                     // If the student does not currently exist in the database,
                     // create them.
                     if (!s.data) {
-                        this.router.navigate(['/register', this.scheduleId, tag]);
+                        this.router.navigate(["/register", this.sessionId, tag]);
                         return;
                     }
 
                     // Set the state to scanned and save the attendance record.
                     this.scanned = true;
-                    const record: Attendance = {
-                        sessionId: this.scheduleId,
-                        tag: tag
-                    };
-                    this.api.updateAttendance(record);
+                    this.api.updateAttendance(this.sessionId, tag);
 
                     // Change state back to not scanned after two seconds.
                     setTimeout(() => {
