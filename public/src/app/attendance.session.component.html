@@ -1,6 +1,14 @@
 <h2>Attendance for {{ session.event }} on {{ date }}</h2>
+<h3>Attended</h3>
 <ul>
-    <li *ngFor="let studentName of attended">
-        {{ studentName }}
+    <li *ngFor="let student of attended">
+        {{ student.name }}
+    </li>
+</ul>
+
+<h3>Absent</h3>
+<ul>
+    <li *ngFor="let student of absent">
+        {{ student.name }}
     </li>
 </ul>

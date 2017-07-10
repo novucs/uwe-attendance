@@ -59,6 +59,11 @@ export class AttendanceApiService {
             .map(res => res.json());
     }
 
+    getStudentsInGroups(groups: string[]) {
+        return this.http.get("/api/student/groups/" + groups.join(','))
+            .map(res => res.json());
+    }
+
     updateStudentTag(name: string, tag: string) {
         const headers = new Headers({"Content-Type": "application/json"});
         const options = new RequestOptions({headers: headers});

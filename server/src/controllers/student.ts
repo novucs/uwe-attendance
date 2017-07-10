@@ -15,26 +15,50 @@ export const studentSchema = new Schema({
     tag: String,
     name: String,
     groups: [String]
-}, {collection: 'students'});
+}, {collection: "students"});
 
 export const studentModel = model<StudentModel>("students", studentSchema);
 export const studentRouter: Router = Router();
 
-studentRouter.get('/student/all', (request: Request, response: Response) => findStudents()
+studentRouter.get("/student/all", (request: Request, response: Response) => findStudents()
     .then(data => response.json({info: "All students found successfully", data: data}))
     .catch(error => response.json({info: "Error during find all students", error: error})));
 
-studentRouter.get('/student/tag/:tag', (request: Request, response: Response) => findStudentByTag(request.params.tag)
+studentRouter.get("/student/tag/:tag", (request: Request, response: Response) => findStudentByTag(request.params.tag)
     .then(data => response.json({info: "Student found successfully", data: data}))
     .catch(error => response.json({info: "Error during find student by tag", error: error})));
 
-studentRouter.get('/student/name/:name', (request: Request, response: Response) => findStudentByName(request.params.name)
+studentRouter.get("/student/name/:name", (request: Request, response: Response) => findStudentByName(request.params.name)
     .then(data => response.json({info: "Student found successfully", data: data}))
     .catch(error => response.json({info: "Error during find student by name", error: error})));
 
-studentRouter.post('/student/tag', (request: Request, response: Response) => updateStudent(request.body.name, request.body.tag)
+studentRouter.get("/student/groups/:groups", (request: Request, response: Response) => findStudentsByGroups(request.params.groups.split(','))
+    .then(data => response.json({info: "Students found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find students by group", error: error})));
+
+studentRouter.post("/student/tag", (request: Request, response: Response) => updateStudent(request.body.name, request.body.tag)
     .then(data => response.json({info: "Student saved successfully", data: data}))
     .catch(error => response.json({info: "Error during student update", error: error})));
+
+/**
+ * Finds all students within specific groups.
+ * @param groups the groups to search for.
+ * @returns {Promise<Student[]>} the promised students.
+ */
+export function findStudentsByGroups(groups: string[]): Promise<Student[]> {
+    return new Promise<Student[]>((fulfill, reject) => {
+        const query = {"groups": {$in: groups}};
+
+        studentModel.find(query, (error, students) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(students);
+        })
+    });
+}
 
 /**
  * Finds all students.

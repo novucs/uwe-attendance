@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {DatePipe} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
-import {AttendanceApiService, Session} from "./api.service";
+import {Attendance, AttendanceApiService, Session, Student} from "./api.service";
 
 @Component({
     selector: "app-attendance-session",
@@ -10,7 +10,9 @@ import {AttendanceApiService, Session} from "./api.service";
 export class SessionAttendanceComponent implements OnInit {
     sessionId: string;
     session: Session = {_id: '', event: '', onDate: new Date(), groups: []};
-    attended: string[];
+    students: Student[] = [];
+    attended: Student[] = [];
+    absent: Student[] = [];
     date: string = '';
 
     constructor(private route: ActivatedRoute,
@@ -19,21 +21,24 @@ export class SessionAttendanceComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.api.getSession(this.sessionId).subscribe(schedule => {
-            this.session.event = schedule.data.event;
-            this.session.onDate = schedule.data.onDate;
+        this.api.getSession(this.sessionId).subscribe(reply => {
+            this.session = reply.data;
 
             const datePipe = new DatePipe("en-UK");
             this.date = datePipe.transform(this.session.onDate, "dd/MM/yyyy @ HH:mm:ss");
-        });
 
-        this.api.getSessionAttendances(this.sessionId).subscribe(a => {
-            for (let i in a.data) {
-                const attendance = a.data[i];
-                this.api.getStudent(attendance.tag).subscribe(s => {
-                    this.attended.push(s.data.name);
+            this.api.getStudentsInGroups(this.session.groups).subscribe(reply => {
+                this.students = reply.data;
+
+                this.api.getSessionAttendances(this.sessionId).subscribe(reply => {
+                    const attendances: Attendance[] = reply.data;
+                    const attendedTags = new Set<string>();
+
+                    attendances.forEach((attendance) => attendedTags.add(attendance.studentTag));
+                    this.students.forEach((student) => attendedTags.has(student.tag) ?
+                        this.attended.push(student) : this.absent.push(student));
                 });
-            }
+            });
         });
     }
 }
