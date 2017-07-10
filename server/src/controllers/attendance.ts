@@ -81,11 +81,11 @@ export function findSessionAttendances(sessionId: string): Promise<Attendance[]>
  * @returns {Promise<Attendance>} the promised attendance.
  */
 export function updateAttendance(sessionId: string, tag: string): Promise<Attendance> {
-    return new Promise<Attendance>((fulfill, reject) => {
-        const sessionPromise = findSessionById(sessionId);
-        const studentPromise = findStudentByTag(tag);
+    const sessionPromise = findSessionById(sessionId);
+    const studentPromise = findStudentByTag(tag);
 
-        Promise.all([sessionPromise, studentPromise]).then(([session, student]) => {
+    return Promise.all([sessionPromise, studentPromise]).then(([session, student]) => {
+        return new Promise<Attendance>((fulfill, reject) => {
             const query = {"session": session._id, "student": student._id};
             const update = {"session": session._id, "student": student._id};
             const options = {upsert: true};
@@ -98,6 +98,6 @@ export function updateAttendance(sessionId: string, tag: string): Promise<Attend
 
                 fulfill(attendance);
             });
-        }).catch(error => reject(error));
+        });
     });
 }

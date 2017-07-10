@@ -5,6 +5,7 @@ export interface Student {
     _id: Schema.Types.ObjectId;
     tag: string;
     name: string;
+    groups: string[];
 }
 
 export interface StudentModel extends Student, Document {
@@ -13,6 +14,7 @@ export interface StudentModel extends Student, Document {
 export const studentSchema = new Schema({
     tag: String,
     name: String,
+    groups: [String]
 }, {collection: 'students'});
 
 export const studentModel = model<StudentModel>("students", studentSchema);

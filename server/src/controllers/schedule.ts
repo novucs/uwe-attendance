@@ -5,6 +5,7 @@ export interface Session {
     _id: Schema.Types.ObjectId;
     event: string;
     onDate: Date;
+    groups: string[];
 }
 
 export interface SessionModel extends Session, Document {
@@ -13,6 +14,7 @@ export interface SessionModel extends Session, Document {
 export const scheduleSchema = new Schema({
     event: String,
     onDate: Date,
+    groups: [String]
 }, {collection: "schedule"});
 
 export const scheduleModel = model<SessionModel>("schedule", scheduleSchema);
