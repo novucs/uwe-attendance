@@ -1,11 +1,5 @@
 <h2>Registration Form</h2>
-
 <br/>
-
-<nav>
-    <a routerLink="/connect" routerLinkActive="active">Connect</a>
-</nav>
-
 <div *ngIf="!registered">
     <ng2-completer
             [(ngModel)]="fullName"
@@ -18,9 +12,7 @@
             clearUnselected=true
             required>
     </ng2-completer>
-
     <br/>
-
     <button
             type="submit"
             class="{{ 'btn ' + (isNameValid() ? 'btn-success' : 'disabled') }}"
@@ -28,7 +20,6 @@
         Submit
     </button>
 </div>
-
 <div *ngIf="registered">
     <h2>You are now successfully registered!</h2>
 </div>

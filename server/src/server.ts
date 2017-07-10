@@ -41,6 +41,7 @@ const server = new WebSocket.Server({port: portNFC});
 
 server.on('connection', ws => {
     console.log("WebSocket connection made");
+    // ws.send("123456");
 });
 
 nfcReader.addListener(nfcReader.receivedEvent, msg => {

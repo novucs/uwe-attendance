@@ -40,16 +40,17 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.api.getAllStudents().subscribe(s => {
+        this.api.getAllStudents().subscribe(reply => {
             this.allowedNames = [];
             const registeredTags: string[] = [];
-            for (let i in s.data) {
-                if (s.data[i].tag == "unknown") {
-                    this.allowedNames.push(s.data[i].name);
+
+            reply.data.forEach((student) => {
+                if (!student.tag) {
+                    this.allowedNames.push(student.name);
                 } else {
-                    registeredTags.push(s.data[i].tag);
+                    registeredTags.push(student.tag);
                 }
-            }
+            });
 
             if (registeredTags.indexOf(this.tag) > -1) {
                 this.registered = true;

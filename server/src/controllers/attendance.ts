@@ -115,8 +115,8 @@ export function updateAttendance(sessionId: string, tag: string): Promise<Attend
 
     return Promise.all([sessionPromise, studentPromise]).then(([session, student]) => {
         return new Promise<Attendance>((fulfill, reject) => {
-            const query = {"sessionId": session._id, "studentTag": student._id};
-            const update = {"sessionId": session._id, "studentTag": student._id};
+            const query = {"sessionId": session._id, "studentTag": student.tag};
+            const update = {"sessionId": session._id, "studentTag": student.tag};
             const options = {upsert: true};
 
             attendanceModel.findOneAndUpdate(query, update, options, (error, attendance) => {

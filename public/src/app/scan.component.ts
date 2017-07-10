@@ -27,10 +27,10 @@ export class ScanComponent implements OnInit {
                 const tag = msg.data;
 
                 // Get the student by this tag from the database.
-                this.api.getStudent(tag).subscribe(s => {
+                this.api.getStudent(tag).subscribe(reply => {
                     // If the student does not currently exist in the database,
                     // create them.
-                    if (!s.data) {
+                    if (!reply.data) {
                         this.router.navigate(["/register", this.sessionId, tag]);
                         return;
                     }

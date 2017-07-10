@@ -1,1 +1,6 @@
-<h2>Please scan your card</h2>
+<div *ngIf="!scanned">
+    <h2>Please scan your card</h2>
+</div>
+<div *ngIf="scanned">
+    <h2>You are now registered in</h2>
+</div>
