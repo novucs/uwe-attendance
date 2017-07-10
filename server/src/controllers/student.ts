@@ -1,142 +1,145 @@
-import { Router, Request, Response } from 'express';
-import * as mongoose from "mongoose";
+import {Request, Response, Router} from "express";
+import {Document, model, ObjectId, Schema} from "mongoose";
 
-// Assign router to the express.Router() instance
-const router: Router = Router();
-
-interface IStudent {
-    tagid:string;
-    name:string;
+export interface Student {
+    _id: ObjectId;
+    tag: string;
+    name: string;
 }
 
-interface IStudentModel extends IStudent, mongoose.Document{};
-var studentSchema = new mongoose.Schema({
+export interface StudentModel extends Student, Document {
+}
+
+export const studentSchema = new Schema({
     tag: String,
     name: String,
-}, { collection: 'students' });
+}, {collection: 'students'});
 
-var student = mongoose.model<IStudentModel>("students", studentSchema);
-export const Student = student;
+export const studentModel = model<StudentModel>("students", studentSchema);
+export const studentRouter: Router = Router();
 
-router.post('/student', function (req: Request, res: Response) {
-    if (req.body.name && req.body.tag) {
-      //console.log("hello" + req.body.name);
-      //res.json({info: 'did it...'});
+studentRouter.get('/student/all', (request: Request, response: Response) => findStudents()
+    .then(data => response.json({info: "All students found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find all students", error: error})));
 
-      var query = {'name': req.body.name};
+studentRouter.get('/student/tag/:tag', (request: Request, response: Response) => findStudentByTag(request.params.tag)
+    .then(data => response.json({info: "Student found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find student by tag", error: error})));
 
-      student.findOneAndUpdate(
-        query,
-        {'tag': req.body.tag},
-        {upsert:true},
-        (err, Student) => {
-          if (err) {
-            res.json({info: 'error during Student update', error: err});
-          }
-          else {
-            res.json({info: 'Student saved successfully', data: Student});
-          }
-      });
+studentRouter.get('/student/name/:name', (request: Request, response: Response) => findStudentByName(request.params.name)
+    .then(data => response.json({info: "Student found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find student by name", error: error})));
 
-    }
-    else { // fields not present
-      res.json(
-        { info: 'error during Student update',
-          error: "name and/or tag not defined" });
-    }
-});
-
-/* Read all */
-router.get('/student', (req: Request, res: Response) => {
-  student.find((err, Students) => {
-      if (err) {
-          res.json({info: 'error during find Students', error: err});
-      };
-      res.json({info: 'Students found successfully', data: Students});
-  });
-});
-
-// find by tag
-router.get('/student/:tag', (req: Request, res: Response) => {
-    var query = { tag: req.params.tag };
-    student.findOne(query, (err, Student) => {
-        if (err) {
-            res.json({info: 'error during find User', error: err});
-        }
-
-        if (Student) {
-            res.json({info: 'Student found successfully', data: Student});
-        } else {
-            res.json({info: 'Student not found with tag: '+ req.params.tag});
-        }
-    });
-});
+studentRouter.post('/student/tag', (request: Request, response: Response) => updateStudent(request.body.name, request.body.tag)
+    .then(data => response.json({info: "Student saved successfully", data: data}))
+    .catch(error => response.json({info: "Error during student update", error: error})));
 
 /**
- * [studentID description]
- * @param  {string}          tag [description]
- * @return {Promise<string>}     [description]
+ * Finds all students.
+ * @returns {Promise<Student[]>} the promised students.
  */
-// export function findStudentbyTag(tag: string): Promise<mongoose.Types.ObjectId> {
-//     return new Promise((resolve, reject)=> {
-//           var query = { tag: tag};
-//           student.findOne(query, (err, Student) => {
-//           if (err) {
-//               reject("error reading ID from student table wth tag");
-//           };
-//           if (Student) {
-//               resolve(Student._id);
-//           } else {
-//               resolve(null);
-//           }
-//       });
-//     });
-// }
-
-// export async function findStudentbyTag1(tag: string): Promise<mongoose.Types.ObjectId> {
-//     return new Promise((resolve, reject)=> {
-//           var query = { tag: tag};
-//           student.findOne(query, (err, Student) => {
-//           if (err) {
-//               reject("error reading ID from student table wth tag");
-//           };
-//           if (Student) {
-//               resolve(Student._id);
-//           } else {
-//               resolve(null);
-//           }
-//       });
-//     });
-//
-// }
-
-export async function findStudentbyTag(tag: string) : Promise<mongoose.Types.ObjectId> {
-  var p: Promise<mongoose.Types.ObjectId> = new Promise((resolve, reject)=> {
-            var query = { tag: tag};
-            student.findOne(query, (err, Student) => {
-            if (err) {
-                reject("error reading ID from student table wth tag");
-            };
-            if (Student) {
-                resolve(Student._id);
-            } else {
-                resolve(null);
+export function findStudents(): Promise<Student[]> {
+    return new Promise((fulfill, reject) => {
+        studentModel.find((error, students) => {
+            if (error) {
+                reject(error);
+                return;
             }
+
+            fulfill(students);
         });
-      });
-
-  return p.then(id => Promise.resolve(id));
+    });
 }
-// find by name
-router.get('/studentByTag/:tag', (req: Request, res: Response) => {
 
-  findStudentbyTag(req.params.tag).then((id:mongoose.Types.ObjectId) => {
-    if (id) {
-        res.json({info: 'Student found successfully', data: id, found: true});
-    } else {
-        res.json({info: 'Student not found with tag:'+ req.params.tag, found: false});
-    }
-  });
-});
+/**
+ * Finds the student by their tag.
+ * @param tag the tag to search.
+ * @returns {Promise<Student>} the promised student.
+ */
+export function findStudentByTag(tag: string): Promise<Student> {
+    return new Promise<Student>((fulfill, reject) => {
+        if (!tag) {
+            reject("No tag provided");
+            return;
+        }
 
-export const StudentRouter: Router = router;
+        const query = {tag: tag};
+
+        studentModel.findOne(query, (error, student) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            if (!student) {
+                reject("No student found with tag: " + tag);
+                return;
+            }
+
+            fulfill(student);
+        });
+    });
+}
+
+/**
+ * Finds the student by their name.
+ * @param name the name to search.
+ * @returns {Promise<Student>} the promised student.
+ */
+export function findStudentByName(name: string): Promise<Student> {
+    return new Promise<Student>((fulfill, reject) => {
+        if (!name) {
+            reject("No name provided");
+            return;
+        }
+
+        const query = {name: name};
+
+        studentModel.findOne(query, (error, student) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            if (!student) {
+                reject("No student found with name: " + name);
+                return;
+            }
+
+            fulfill(student);
+        });
+    });
+}
+
+/**
+ * Updates the students tag.
+ * @param name the students name.
+ * @param tag the new tag.
+ * @returns {Promise<Student>} the promised student.
+ */
+export function updateStudent(name: string, tag: string): Promise<Student> {
+    return new Promise((fulfill, reject) => {
+        if (!name) {
+            reject("No name provided");
+            return;
+        }
+
+        if (!tag) {
+            reject("No tag provided");
+            return;
+        }
+
+        const query = {"name": name};
+        const update = {"tag": tag};
+        const options = {upsert: true};
+
+        studentModel.findOneAndUpdate(query, update, options, (error, student) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(student);
+        });
+    });
+}

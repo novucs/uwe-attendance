@@ -1,11 +1,3 @@
-/**
- * @module reader.ts
- * @author Benedict R. Gaster
- * @copyright Benedict R. Gaster 2017
- *
- * @license See LICENSE
- */
-
 import * as events from "events";
 import * as path from "path";
 import * as worker from "streaming-worker";

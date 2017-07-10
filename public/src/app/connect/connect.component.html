@@ -1,60 +1,62 @@
 <h2>What would you like to do?</h2>
 
 <div class="jumbotron">
-  <h3>Start the register for this session</h3>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false">
-      Select the current session
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <div class="row" *ngFor="let schedule of currentSchedules">
-        <a class="dropdown-item" [routerLink]="['/scan', schedule._id]">{{schedule.event}} on {{schedule.onDate}}</a>
-      </div>
+    <h3>Start the register for this session</h3>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+            Select the current session
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="row" *ngFor="let schedule of currentSchedules">
+                <a class="dropdown-item" [routerLink]="['/scan', schedule._id]">{{schedule.event}} on
+                    {{schedule.onDate}}</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-<br />
+<br/>
 
 <div class="jumbotron">
-  <h3>View all attendance for a session</h3>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false">
-      Select a session
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <div class="row" *ngFor="let schedule of schedules">
-        <a class="dropdown-item" [routerLink]="['/schedule-attendance', schedule._id]">{{schedule.event}} on {{schedule.onDate}}</a>
-      </div>
+    <h3>View all attendance for a session</h3>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+            Select a session
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="row" *ngFor="let schedule of schedules">
+                <a class="dropdown-item" [routerLink]="['/schedule-attendance', schedule._id]">{{schedule.event}} on
+                    {{schedule.onDate}}</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-<br />
+<br/>
 
 <div class="jumbotron">
-  <h3>View all attendance for a student</h3>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false">
-      Select a student
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <div class="row" *ngFor="let student of students">
-        <a class="dropdown-item" [routerLink]="['/student-attendance', student._id]">{{student.name}}</a>
-      </div>
+    <h3>View all attendance for a student</h3>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+            Select a student
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="row" *ngFor="let student of students">
+                <a class="dropdown-item" [routerLink]="['/student-attendance', student._id]">{{student.name}}</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

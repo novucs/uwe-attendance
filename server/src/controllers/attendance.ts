@@ -1,111 +1,103 @@
-/**
- * File: attendance.ts
- * Author: Benedict R. Gaster
- * Description:
- */
-import { Router, Request, Response } from 'express';
-import * as mongoose from "mongoose";
+import {Request, Response, Router} from "express";
+import {Document, model, ObjectId, Schema} from "mongoose";
+import {findSessionById} from "./schedule";
+import {findStudentByTag} from "./student";
 
-import { findStudentbyTag } from './student';
-import { findScheduleById, ISchedule } from './schedule';
-
-// Assign router to the express.Router() instance
-const router: Router = Router();
-
-interface IAttendance {
-    student: mongoose.Types.ObjectId;
-    schedule: mongoose.Types.ObjectId;
+export interface Attendance {
+    _id: ObjectId;
+    student: ObjectId;
+    schedule: ObjectId;
 }
 
-interface IAttendanceModel extends IAttendance, mongoose.Document{};
-var attendanceSchema = new mongoose.Schema({
-    student: mongoose.Schema.Types.ObjectId, //mongoose.Types.ObjectId,
-    schedule: mongoose.Schema.Types.ObjectId, //mongoose.Types.ObjectId,
-}, { collection: 'attendance' });
+export interface AttendanceModel extends Attendance, Document {
+}
 
-var attendance =
-  mongoose.model<IAttendanceModel>("attendance", attendanceSchema);
+export const attendanceSchema = new Schema({
+    student: ObjectId,
+    schedule: ObjectId,
+}, {collection: "attendance"});
 
-export const Attendance = attendance;
+export const attendanceModel = model<AttendanceModel>("attendance", attendanceSchema);
+export const attendanceRouter: Router = Router();
 
-/* Read all */
-router.get('/attendance', (req: Request, res: Response) => {
-  attendance.find((err, Attendances) => {
-      if (err) {
-          res.json({info: 'error during find Attendances', error: err});
-      };
-      res.json({info: 'Attendances found successfully', data: Attendances});
-  });
-});
+attendanceRouter.get("/attendance/all", (request: Request, response: Response) => findAllAttendances()
+    .then(data => response.json({info: "All attendances found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find all attendances", error: error})));
 
-router.get('/session-attendance/:sessionId', (req: Request, res: Response) => {
-  var query = { sessionId: req.params.sessionId };
-  attendance.find(query, (err, Attendances) => {
-      if (err) {
-          res.json({info: 'error during find Attendances', error: err});
-      };
-      res.json({info: 'Attendances found successfully', data: Attendances});
-  });
-});
+attendanceRouter.get("/attendance/session/:sessionId", (request: Request, response: Response) => findSessionAttendances(request.params.sessionId)
+    .then(data => response.json({info: "Session attendances found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find session attendances", error: error})));
 
-router.put('/attendance', function (req: Request, res: Response) {
-  //console.log("booo " + JSON.stringify(req.body))
-    if (req.body.tag && req.body.sessionId) {
-      (async () => {
-          var studentId:mongoose.Types.ObjectId =
-                            await findStudentbyTag(req.body.tag);
-          if (studentId) {
-            var schedule: ISchedule =
-                            await findScheduleById(req.body.sessionId);
-            if (schedule) {
+attendanceRouter.put("/attendance", (request: Request, response: Response) => updateAttendance(request.body.sessionId, request.body.tag)
+    .then(data => response.json({info: "Attendance saved successfully", data: data}))
+    .catch(error => response.json({info: "Error during attendance update", error: error})));
 
-              var scheduleId = new mongoose.mongo.ObjectId(req.body.sessionId);
-
-              var query = {'student': studentId, 'schedule': scheduleId};
-
-              // we allow update to itself (this is the case when student
-              // swipes id more than once), but normally it will insert a
-              // new row for attendance for a given session.
-              attendance.findOneAndUpdate(
-                query,
-                {'student': studentId, 'schedule': scheduleId},
-                {upsert:true},
-                (err, attendance) => {
-                  if (err) {
-                    res.json(
-                      {
-                        info: 'error during attendance insertion',
-                        error: err
-                      });
-                  }
-                  else {
-                    res.json(
-                      {
-                        info: 'attendance added successfully',
-                        data: attendance
-                      });
-                  }
-              });
-
-            } else {
-              // the system is designed for this not really to happen, see docs
-              res.json({
-                info: 'Session not found with Id:'+ req.body.sessionId,
-                found: false});
+/**
+ * Finds all attendances.
+ * @returns {Promise<Attendance[]>} the promised attendances.
+ */
+export function findAllAttendances(): Promise<Attendance[]> {
+    return new Promise<Attendance[]>((fulfill, reject) => {
+        attendanceModel.find((error, attendances) => {
+            if (error) {
+                reject(error);
+                return;
             }
 
-          } else {
-              res.json({
-                info: 'Student not found with tag:'+ req.body.tag,
-                found: false});
-          }
-      })(); // async () =>
-    }
-    else {
-      res.json(
-        { info: 'error during attendance submissison',
-          error: "tag and/or session not defined" });
-    }
-});
+            fulfill(attendances);
+        });
+    });
+}
 
-export const AttendanceRouter: Router = router;
+/**
+ * Finds all attendances for a specific session.
+ * @param sessionId the session to search for.
+ * @returns {Promise<Attendance[]>} the promised attendances.
+ */
+export function findSessionAttendances(sessionId: string): Promise<Attendance[]> {
+    return new Promise<Attendance[]>((fulfill, reject) => {
+        if (!sessionId) {
+            reject("No session ID provided");
+            return;
+        }
+
+        const query = {sessionId: sessionId};
+
+        attendanceModel.find(query, (error, attendances) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(attendances);
+        });
+    });
+}
+
+/**
+ * Updates or creates an attendance entry.
+ * @param sessionId the session ID.
+ * @param tag the student tag.
+ * @returns {Promise<Attendance>} the promised attendance.
+ */
+export function updateAttendance(sessionId: string, tag: string): Promise<Attendance> {
+    return new Promise<Attendance>((fulfill, reject) => {
+        const sessionPromise = findSessionById(sessionId);
+        const studentPromise = findStudentByTag(tag);
+
+        Promise.all([sessionPromise, studentPromise]).then(([session, student]) => {
+            const query = {"session": session._id, "student": student._id};
+            const update = {"session": session._id, "student": student._id};
+            const options = {upsert: true};
+
+            attendanceModel.findOneAndUpdate(query, update, options, (error, attendance) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
+                fulfill(attendance);
+            });
+        }).catch(error => reject(error));
+    });
+}

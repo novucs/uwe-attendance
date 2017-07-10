@@ -1,87 +1,103 @@
-/**
- * @module schedule.cpp
- * @author Benedict R. Gaster
- * @copyright Benedict R. Gaster 2017
- *
- *
- * @license See LICENSE
- */
-import { Router, Request, Response } from 'express';
-import * as mongoose from "mongoose";
+import {Request, Response, Router} from "express";
+import {Document, model, ObjectId, Schema} from "mongoose";
 
-// Assign router to the express.Router() instance
-const router: Router = Router();
-
-export interface ISchedule{
+export interface Session {
+    _id: ObjectId;
     event: string;
     onDate: Date;
 }
 
-interface IScheduleModel extends ISchedule, mongoose.Document{};
-var scheduleSchema = new mongoose.Schema({
-    event: String,
-    onDate: Date,
-}, { collection: 'schedule' });
-
-var schedule = mongoose.model<IScheduleModel>("schedule", scheduleSchema);
-
-export const Schedule = schedule;
-
-router.get('/current-schedule', (req: Request, res: Response) => {
-  var yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  var query = {onDate: {
-    "$gte": yesterday,
-    "$lt": tomorrow
-  }};
-
-  schedule.find(query, (err, Schedules) => {
-    if (err) {
-      res.json({info: 'error during find Schedules', error: err});
-    }
-    res.json({info: 'Schedules.. found successfully', data: Schedules});
-  });
-});
-
-/* Read all */
-router.get('/schedule', (req: Request, res: Response) => {
-  schedule.find((err, Schedules) => {
-    if (err) {
-      res.json({info: 'error during find Schedules', error: err});
-    }
-    res.json({info: 'Schedules.. found successfully', data: Schedules});
-  });
-});
-
-router.get('/schedule/:id', (req: Request, res: Response) => {
-  var query = { _id: req.params.id };
-  schedule.findOne(query, (err, Schedule) => {
-    if (err) {
-      res.json({info: 'error during find Schedule', error: err});
-    }
-
-    if (Schedule) {
-      res.json({info: 'Schedule found successfully', data: Schedule});
-    } else {
-      res.json({info: 'Schedule not found with tag: '+ req.params.id});
-    }
-  });
-});
-
-export function findScheduleById(sessionId: string): Promise<ISchedule> {
-  var p: Promise<ISchedule> = new Promise((resolve, reject)=> {
-    schedule.findById(sessionId, function (err, ischedule: ISchedule) {
-      if (err) {
-        reject("error reading schedule from schedule table with session ID");
-      };
-      resolve(ischedule);
-    });
-  });
-
-  return p.then(s => Promise.resolve(s));
+export interface SessionModel extends Session, Document {
 }
 
-export const ScheduleRouter: Router = router;
+export const scheduleSchema = new Schema({
+    event: String,
+    onDate: Date,
+}, {collection: "schedule"});
+
+export const scheduleModel = model<SessionModel>("schedule", scheduleSchema);
+export const scheduleRouter: Router = Router();
+
+scheduleRouter.get("/schedule/all", (request: Request, response: Response) => findAllSessions()
+    .then(data => response.json({info: "All sessions found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find all sessions", error: error})));
+
+scheduleRouter.get("/schedule/today", (request: Request, response: Response) => findSessionsToday()
+    .then(data => response.json({info: "Today's sessions found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find today's sessions", error: error})));
+
+scheduleRouter.get("/schedule/id/:id", (request: Request, response: Response) => findSessionById(request.params.id)
+    .then(data => response.json({info: "Session found successfully", data: data}))
+    .catch(error => response.json({info: "Error during find session by ID", error: error})));
+
+/**
+ * Finds all sessions.
+ * @returns {Promise<Session[]>} the promised sessions.
+ */
+export function findAllSessions(): Promise<Session[]> {
+    return new Promise<Session[]>((fulfill, reject) => {
+        scheduleModel.find((error, sessions) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(sessions);
+        });
+    });
+}
+
+/**
+ * Finds all sessions within 24 hours of the current time.
+ * @returns {Promise<Session[]>} the promised sessions.
+ */
+export function findSessionsToday(): Promise<Session[]> {
+    return new Promise<Session[]>((fulfill, reject) => {
+        const yesterday = new Date();
+        const tomorrow = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const query = {onDate: {"$gt": yesterday, "$lt": tomorrow}};
+
+        scheduleModel.find(query, (error, sessions) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fulfill(sessions);
+            return;
+        });
+    });
+}
+
+/**
+ * Finds a session by the provided session ID.
+ * @param sessionId the session ID.
+ * @returns {Promise<Session>} the promised session.
+ */
+export function findSessionById(sessionId: string): Promise<Session> {
+    return new Promise<Session>((fulfill, reject) => {
+        if (!sessionId) {
+            reject("No session ID provided");
+            return;
+        }
+
+        const query = {_id: sessionId};
+
+        scheduleModel.findOne(query, (error, session) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            if (!session) {
+                reject("No session found with ID: " + sessionId);
+                return;
+            }
+
+            fulfill(session);
+        });
+    });
+}

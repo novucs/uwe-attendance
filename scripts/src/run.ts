@@ -15,7 +15,7 @@ const scheduleSchema = new mongoose.Schema({
     onDate: Date
 }, {collection: 'schedule'});
 
-fs.readFile('../students.csv', 'utf8', function (err, data) {
+fs.readFile('students.csv', 'utf8', function (err, data) {
     if (err) {
         throw err;
     }
@@ -30,8 +30,8 @@ fs.readFile('../students.csv', 'utf8', function (err, data) {
         }
 
         mongoose.model("students", studentSchema).findOneAndUpdate(
-            {'name': name},
-            {'tag': 'unknown'},
+            {"name": name},
+            {"tag": ''},
             {upsert: true},
             (err) => {
                 if (err) {
@@ -43,7 +43,7 @@ fs.readFile('../students.csv', 'utf8', function (err, data) {
     }
 });
 
-fs.readFile('../schedule.csv', 'utf8', function (err, data) {
+fs.readFile('schedule.csv', 'utf8', function (err, data) {
     if (err) {
         throw err;
     }

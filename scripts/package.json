@@ -6,7 +6,7 @@
   "private": true,
   "description": "Useful scripts for the UWE attendance system",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node build/run.js"
   },
   "dependencies": {
     "mongoose": "^4.11.1"
