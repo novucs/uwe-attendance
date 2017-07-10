@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
             name: this.fullName
         };
 
-        this.api.updateStudent(student);
+        this.api.updateStudentTag(student);
 
         this.registered = true;
         const record: Attendance = {
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.api.getStudents().subscribe(s => {
+        this.api.getAllStudents().subscribe(s => {
             this.allowedNames = [];
             const registeredTags: string[] = [];
             for (let i in s.data) {

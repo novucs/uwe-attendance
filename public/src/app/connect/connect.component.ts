@@ -16,13 +16,13 @@ export class ConnectComponent implements OnInit {
 
     ngOnInit() {
         // Retrieve posts from the API
-        this.api.getCurrentSchedules().subscribe(s => {
+        this.api.getScheduleToday().subscribe(s => {
             this.currentSchedules = s.data;
         });
         this.api.getSchedules().subscribe(s => {
             this.schedules = s.data;
         });
-        this.api.getStudents().subscribe(s => {
+        this.api.getAllStudents().subscribe(s => {
             this.students = s.data;
         });
     }

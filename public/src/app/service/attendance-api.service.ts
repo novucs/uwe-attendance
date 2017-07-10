@@ -8,60 +8,13 @@ export class AttendanceApiService {
     constructor(private http: Http) {
     }
 
-    getSchedules() {
-        return this.http.get('/api/schedule')
+    getAllAttendances() {
+        return this.http.get('/api/attendance/all')
             .map(res => res.json());
     }
 
-    getSchedule(id: string) {
-        return this.http.get('/api/schedule/' + id)
-            .map(res => res.json());
-    }
-
-    getCurrentSchedules() {
-        return this.http.get('/api/current-schedule')
-            .map(res => res.json());
-    }
-
-    updateSchedule(schedule: Schedule) {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this.http.post('/api/schedule', JSON.stringify(schedule), options)
-            .subscribe(data => {
-                console.log(data.json());
-            }, error => {
-                console.log(error);
-            });
-    }
-
-    getStudents() {
-        return this.http.get('/api/student')
-            .map(res => res.json());
-    }
-
-    getStudent(tag: string) {
-        return this.http.get('/api/student/' + tag)
-            .map(res => res.json());
-    }
-
-    updateStudent(student: Student) {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this.http.post('/api/student', JSON.stringify(student), options)
-            .subscribe(data => {
-                console.log(data.json());
-            }, error => {
-                console.log(error);
-            });
-    }
-
-    getAttendance() {
-        return this.http.get('/api/attendance')
-            .map(res => res.json());
-    }
-
-    getScheduleAttendance(sessionId: string) {
-        return this.http.get('/api/session-attendance/' + sessionId)
+    getSessionAttendances(sessionId: string) {
+        return this.http.get('/api/attendance/session/' + sessionId)
             .map(res => res.json());
     }
 
@@ -69,6 +22,53 @@ export class AttendanceApiService {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
         return this.http.put('/api/attendance', JSON.stringify(attendance), options)
+            .subscribe(data => {
+                console.log(data.json());
+            }, error => {
+                console.log(error);
+            });
+    }
+
+    getSchedules() {
+        return this.http.get('/api/schedule/all')
+            .map(res => res.json());
+    }
+
+    getScheduleToday() {
+        return this.http.get('/api/schedule/today')
+            .map(res => res.json());
+    }
+
+    getSchedule(id: string) {
+        return this.http.get('/api/schedule/id/' + id)
+            .map(res => res.json());
+    }
+
+    // updateSchedule(schedule: Schedule) {
+    //     let headers = new Headers({'Content-Type': 'application/json'});
+    //     let options = new RequestOptions({headers: headers});
+    //     return this.http.post('/api/schedule', JSON.stringify(schedule), options)
+    //         .subscribe(data => {
+    //             console.log(data.json());
+    //         }, error => {
+    //             console.log(error);
+    //         });
+    // }
+
+    getAllStudents() {
+        return this.http.get("/api/student/all")
+            .map(res => res.json());
+    }
+
+    getStudent(tag: string) {
+        return this.http.get("/api/student/tag/" + tag)
+            .map(res => res.json());
+    }
+
+    updateStudentTag(student: Student) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
+        return this.http.post('/api/student/tag', JSON.stringify(student), options)
             .subscribe(data => {
                 console.log(data.json());
             }, error => {

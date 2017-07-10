@@ -27,7 +27,7 @@ export class ScheduleAttendanceComponent implements OnInit {
             this.date = datePipe.transform(this.schedule.onDate, 'dd/MM/yyyy @ HH:mm:ss');
         });
 
-        this.api.getScheduleAttendance(this.scheduleId).subscribe(a => {
+        this.api.getSessionAttendances(this.scheduleId).subscribe(a => {
             for (let i in a.data) {
                 const attendance = a.data[i];
                 this.api.getStudent(attendance.tag).subscribe(s => {
