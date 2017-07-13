@@ -4,10 +4,10 @@ import * as bodyParser from "body-parser";
 import * as path from "path";
 import * as WebSocket from "ws";
 import * as mongoose from "mongoose";
-import {NFCReader} from "./nfc_reader";
 import {attendanceRouter, scheduleRouter, studentRouter} from "./controllers";
+import * as nfc from "nfc";
+import * as util from "util";
 
-const nfcReader = new NFCReader();
 const app: Application = express();
 const port = process.env.PORT || 3000;
 
@@ -44,7 +44,13 @@ server.on('connection', ws => {
     // ws.send("123456");
 });
 
-nfcReader.addListener(nfcReader.receivedEvent, msg => {
-    // broadcast msg (button press) to all listening sockets
-    console.log(msg);
-});
+console.log("nfc.version(): " + util.inspect(nfc.nfc.version(), {depth: null}));
+console.log("nfc.scan(): " + util.inspect(nfc.nfc.scan(), {depth: null}));
+const device = new nfc.nfc.NFC();
+device.on("read", tag => {
+    if ((!!tag.data) && (!!tag.offset)) {
+        console.log(util.inspect(nfc.nfc.parse(tag.data.slice(tag.offset)), {depth: null}));
+    }
+}).on("error", error => {
+    console.log("An error occurred while reading the NFC device: ", error);
+}).start();

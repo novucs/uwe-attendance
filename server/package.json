@@ -16,6 +16,7 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.2",
     "nan": "^2.6.1",
+    "nfc": "^0.3.3",
     "streaming-worker": "^1.0.1",
     "streaming-worker-sdk": "^0.9.3",
     "ws": "^2.2.3"
