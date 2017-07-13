@@ -42,6 +42,7 @@ const clients = [];
 
 server.on("connection", ws => {
     console.log("WebSocket connection made");
+    clients.push(ws);
 
     ws.on("close", ws => {
         const index = clients.indexOf(ws, 0);
@@ -53,16 +54,14 @@ server.on("connection", ws => {
     // ws.send("123456");
 });
 
-console.log("nfc.version(): " + util.inspect(nfc.version(), {depth: null}));
-console.log("nfc.scan(): " + util.inspect(nfc.scan(), {depth: null}));
 const device = new nfc.NFC();
 
 device.on("read", tag => {
-    if ((!!tag.data) && (!!tag.offset)) {
-        const tagData = util.inspect(nfc.parse(tag.data.slice(tag.offset)));
-        console.log(tagData, {depth: null});
-        clients.forEach(client => client.send(tagData));
-    }
+    clients.forEach(client => {
+        if (client.readyState == WebSocket.OPEN) {
+            client.send(tag.uid);
+        }
+    });
 }).on("error", error => {
     console.log("An error occurred while reading the NFC device: ", error);
 }).start();
