@@ -3,10 +3,9 @@
 # Prerequisites
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install nodejs npm mongodb
+sudo apt-get install nodejs npm mongodb libusb-dev dh-autoreconf
 sudo npm install -g @angular/cli
 sudo systemctl start mongodb
-sudo apt-get install libusb-dev dh-autoreconf
 
 # LibNFC
 git clone https://github.com/nfc-tools/libnfc.git
