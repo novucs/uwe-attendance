@@ -1,25 +1,27 @@
 <h2>Registration Form</h2>
 <br/>
-<div *ngIf="!registered">
-    <ng2-completer
-            [(ngModel)]="fullName"
-            [datasource]="allowedNames"
-            [minSearchLength]="0"
-            class="form-control"
-            placeholder="Full Name"
-            autoMatch=true
-            autofocus=true
-            clearUnselected=true
-            required>
-    </ng2-completer>
-    <br/>
-    <button
-            type="submit"
-            class="{{ 'btn ' + (isNameValid() ? 'btn-success' : 'disabled') }}"
-            (click)="onSubmit()">
-        Submit
-    </button>
-</div>
-<div *ngIf="registered">
-    <h2>You are now successfully registered!</h2>
+
+<div class="jumbotron">
+    <div *ngIf="!registered">
+        <h3>Select your name</h3>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                Select your name
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="row" *ngFor="let name of allowedNames">
+                    <span class="dropdown-item" (click)="fullName = name; onSubmit()">
+                        {{ name }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="registered">
+        <h2>You are now successfully registered!</h2>
+    </div>
 </div>
