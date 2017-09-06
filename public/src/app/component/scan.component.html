@@ -1,6 +1,10 @@
-<div *ngIf="!scanned">
-    <h2>Please scan your card</h2>
-</div>
-<div *ngIf="scanned">
-    <img src="../../assets/img/tick.svg" class="tick"/>
-</div>
+<md-card>
+    <md-card-title>
+        <span>Scanning</span>
+    </md-card-title>
+    <md-card-content>
+        <md-card-subtitle>Taking registration for {{session.event}} on {{formatDate(session.onDate)}}</md-card-subtitle>
+        <md-spinner *ngIf="!scanned"></md-spinner>
+        <md-icon *ngIf="scanned">done</md-icon>
+    </md-card-content>
+</md-card>

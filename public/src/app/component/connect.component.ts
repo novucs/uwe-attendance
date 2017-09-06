@@ -10,6 +10,7 @@ export class ConnectComponent implements OnInit {
     sessionsToday: Session[] = [];
     sessions: Session[] = [];
     students: Student[] = [];
+    currentSession: Session = EMPTY_SESSION;
     session: Session = EMPTY_SESSION;
     student: Student = EMPTY_STUDENT;
 

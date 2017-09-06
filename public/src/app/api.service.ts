@@ -6,6 +6,8 @@ import {DatePipe} from "@angular/common";
 @Injectable()
 export class AttendanceApiService {
 
+    urlBase = "http://localhost:3000";
+
     constructor(private http: Http) {
     }
 
@@ -15,17 +17,17 @@ export class AttendanceApiService {
     }
 
     getAllAttendances() {
-        return this.http.get("/api/attendance/all")
+        return this.http.get(this.urlBase + "/api/attendance/all")
             .map(res => res.json());
     }
 
     getSessionAttendances(sessionId: string) {
-        return this.http.get("/api/attendance/session/" + sessionId)
+        return this.http.get(this.urlBase + "/api/attendance/session/" + sessionId)
             .map(res => res.json());
     }
 
     getStudentAttendances(tag: string) {
-        return this.http.get("/api/attendance/student/" + tag)
+        return this.http.get(this.urlBase + "/api/attendance/student/" + tag)
             .map(res => res.json());
     }
 
@@ -37,7 +39,7 @@ export class AttendanceApiService {
             studentTag: studentTag
         });
 
-        return this.http.put("/api/attendance", body, options)
+        return this.http.put(this.urlBase + "/api/attendance", body, options)
             .subscribe(data => {
                 console.log(data.json());
             }, error => {
@@ -46,37 +48,37 @@ export class AttendanceApiService {
     }
 
     getSessions() {
-        return this.http.get("/api/schedule/all")
+        return this.http.get(this.urlBase + "/api/schedule/all")
             .map(res => res.json());
     }
 
     getSessionsToday() {
-        return this.http.get("/api/schedule/today")
+        return this.http.get(this.urlBase + "/api/schedule/today")
             .map(res => res.json());
     }
 
     getSession(id: string) {
-        return this.http.get("/api/schedule/id/" + id)
+        return this.http.get(this.urlBase + "/api/schedule/id/" + id)
             .map(res => res.json());
     }
 
     getSessionsByGroups(groups: string[]) {
-        return this.http.get("/api/schedule/groups/" + groups.join(','))
+        return this.http.get(this.urlBase + "/api/schedule/groups/" + groups.join(','))
             .map(res => res.json());
     }
 
     getAllStudents() {
-        return this.http.get("/api/student/all")
+        return this.http.get(this.urlBase + "/api/student/all")
             .map(res => res.json());
     }
 
     getStudent(tag: string) {
-        return this.http.get("/api/student/tag/" + tag)
+        return this.http.get(this.urlBase + "/api/student/tag/" + tag)
             .map(res => res.json());
     }
 
     getStudentsByGroups(groups: string[]) {
-        return this.http.get("/api/student/groups/" + groups.join(','))
+        return this.http.get(this.urlBase + "/api/student/groups/" + groups.join(','))
             .map(res => res.json());
     }
 
@@ -88,7 +90,7 @@ export class AttendanceApiService {
             tag: tag
         });
 
-        return this.http.post("/api/student/tag", body, options)
+        return this.http.post(this.urlBase + "/api/student/tag", body, options)
             .subscribe(data => {
                 console.log(data.json());
             }, error => {

@@ -1,46 +1,63 @@
 <md-card>
-    <md-toolbar>
+    <md-card-title>
         <span>Main Menu</span>
-    </md-toolbar>
-    <md-tab-group>
-        <md-tab label="Take Register">
-            <br/>
-            <md-card-title>Start the register for this session</md-card-title>
-            <md-select placeholder="Session" [(ngModel)]="session" [style.width]="'100%'">
-                <md-option *ngFor="let schedule of sessionsToday" [value]="schedule">
-                    {{ formatDate(schedule.onDate) }} - {{ schedule.event }}
-                </md-option>
-            </md-select>
-            <br/>
-            <br/>
-            <br/>
-            <button md-raised-button color="primary" [routerLink]="['/scan', session._id]">Submit</button>
-        </md-tab>
-        <md-tab label="Session Records">
-            <br/>
-            <md-card-title>View all attendance for a session</md-card-title>
-            <md-select placeholder="Record" [(ngModel)]="session" [style.width]="'100%'">
-                <md-option *ngFor="let schedule of sessions" [value]="schedule">
-                    {{ formatDate(schedule.onDate) }} - {{ schedule.event }}
-                </md-option>
-            </md-select>
-            <br/>
-            <br/>
-            <br/>
-            <button md-raised-button color="primary" [routerLink]="['/attendance/session', session._id]">Submit</button>
-        </md-tab>
-        <md-tab label="Student Records">
-            <br/>
-            <md-card-title>View all attendance for a student</md-card-title>
-            <md-select placeholder="Record" [(ngModel)]="student" [style.width]="'100%'">
-                <md-option *ngFor="let student of students" [value]="student">
-                    {{ student.name }}
-                </md-option>
-            </md-select>
-            <br/>
-            <br/>
-            <br/>
-            <button md-raised-button color="primary" [routerLink]="['/attendance/student', student.tag]">Submit</button>
-        </md-tab>
-    </md-tab-group>
+    </md-card-title>
+    <md-card-content>
+        <md-tab-group>
+            <md-tab label="Take Register">
+                <br/>
+                <md-card-subtitle>Start the register for this session</md-card-subtitle>
+                <md-select placeholder="Session" [(ngModel)]="currentSession" [style.width]="'100%'">
+                    <md-option *ngFor="let schedule of sessionsToday" [value]="schedule">
+                        {{ formatDate(schedule.onDate) }} - {{ schedule.event }}
+                    </md-option>
+                </md-select>
+                <br/>
+                <br/>
+                <br/>
+                <button md-raised-button
+                        color="primary"
+                        disabled="{{currentSession._id == '_'}}"
+                        [routerLink]="['/scan', currentSession._id]">
+                    Submit
+                </button>
+            </md-tab>
+            <md-tab label="Session Records">
+                <br/>
+                <md-card-subtitle>View all attendance for a session</md-card-subtitle>
+                <md-select placeholder="Record" [(ngModel)]="session" [style.width]="'100%'">
+                    <md-option *ngFor="let schedule of sessions" [value]="schedule">
+                        {{ formatDate(schedule.onDate) }} - {{ schedule.event }}
+                    </md-option>
+                </md-select>
+                <br/>
+                <br/>
+                <br/>
+                <button md-raised-button
+                        color="primary"
+                        disabled="{{session._id == '_'}}"
+                        [routerLink]="['/session', session._id]">
+                    Submit
+                </button>
+            </md-tab>
+            <md-tab label="Student Records">
+                <br/>
+                <md-card-subtitle>View all attendance for a student</md-card-subtitle>
+                <md-select placeholder="Record" [(ngModel)]="student" [style.width]="'100%'">
+                    <md-option *ngFor="let student of students" [value]="student">
+                        {{ student.name }}
+                    </md-option>
+                </md-select>
+                <br/>
+                <br/>
+                <br/>
+                <button md-raised-button
+                        color="primary"
+                        disabled="{{student.tag == '_'}}"
+                        [routerLink]="['/student', student.tag]">
+                    Submit
+                </button>
+            </md-tab>
+        </md-tab-group>
+    </md-card-content>
 </md-card>

@@ -1,60 +1,38 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 import {AttendanceApiService} from "../api.service";
 
 @Component({
-    selector: "app-register",
-    templateUrl: "./register.component.html"
+    selector: 'app-register-dialog',
+    templateUrl: 'register.component.html'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
-    tag: string;
-    sessionId: string;
-    allowedNames: string[] = [];
-    fullName: string = "";
-    registered: boolean;
+    control: FormControl = new FormControl();
+    options = [];
+    filteredOptions: Observable<string[]>;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private api: AttendanceApiService) {
-        this.sessionId = route.snapshot.params["sessionId"];
-        this.tag = route.snapshot.params["tag"];
-    }
-
-    isNameValid() {
-        return this.allowedNames.indexOf(this.fullName) > -1;
-    }
-
-    onSubmit() {
-        if (!this.isNameValid()) {
-            return;
-        }
-
-        this.api.updateStudentTag(this.fullName, this.tag);
-        this.api.updateAttendance(this.sessionId, this.tag);
-        this.registered = true;
-
-        setTimeout(() => {
-            this.router.navigate(["/scan", this.sessionId]);
-        }, 2000);
+    constructor(private api: AttendanceApiService) {
     }
 
     ngOnInit() {
-        this.api.getAllStudents().subscribe(reply => {
-            this.allowedNames = [];
-            const registeredTags: string[] = [];
-
-            reply.data.forEach((student) => {
+        this.api.getAllStudents().subscribe(result => {
+            result.data.forEach(student => {
                 if (!student.tag) {
-                    this.allowedNames.push(student.name);
-                } else {
-                    registeredTags.push(student.tag);
+                    this.options.push(student.name);
                 }
             });
-
-            if (registeredTags.indexOf(this.tag) > -1) {
-                this.registered = true;
-            }
+            this.filteredOptions = this.control.valueChanges
+                .startWith(null)
+                .map(val => val ? this.filter(val) : this.options.slice());
         });
+    }
+
+    filter(val: string): string[] {
+        return this.options.filter(option =>
+            option.toLowerCase().indexOf(val.toLowerCase()) >= 0);
     }
 }

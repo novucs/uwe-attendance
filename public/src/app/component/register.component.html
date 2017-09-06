@@ -1,27 +1,26 @@
-<h2>Registration Form</h2>
-<br/>
-
-<div class="jumbotron">
-    <div *ngIf="!registered">
-        <h3>Select your name</h3>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                Select your name
+<h2 md-dialog-title>Register</h2>
+<md-dialog-content>Enter your name to register</md-dialog-content>
+<md-dialog-actions>
+    <md-list>
+        <md-list-item>
+            <form>
+                <md-form-field>
+                    <input type="text" placeholder="Enter Name" mdInput [formControl]="control" [mdAutocomplete]="auto">
+                    <md-autocomplete #auto="mdAutocomplete">
+                        <md-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option }}
+                        </md-option>
+                    </md-autocomplete>
+                </md-form-field>
+            </form>
+        </md-list-item>
+        <md-list-item>
+            <button md-button md-raised-button
+                    color="primary"
+                    disabled="{{options.indexOf(control.value) === -1}}"
+                    [md-dialog-close]="control.value">
+                Confirm
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <div class="row" *ngFor="let name of allowedNames">
-                    <span class="dropdown-item" (click)="fullName = name; onSubmit()">
-                        {{ name }}
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="registered">
-        <h2>You are now successfully registered!</h2>
-    </div>
-</div>
+        </md-list-item>
+    </md-list>
+</md-dialog-actions>

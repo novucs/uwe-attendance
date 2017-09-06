@@ -3,30 +3,20 @@ import {RouterModule, Routes} from "@angular/router";
 import {ConnectComponent} from "./component/connect.component";
 import {SessionAttendanceComponent} from "./component/session.component";
 import {StudentAttendanceComponent} from "./component/student.component";
-import {RegisterComponent} from "./component/register.component";
 import {ScanComponent} from "./component/scan.component";
 
 const appRoutes: Routes = [
     {
         path: "",
-        redirectTo: "/connect",
-        pathMatch: "full"
-    },
-    {
-        path: "connect",
         component: ConnectComponent
     },
     {
-        path: "attendance/session/:sessionId",
+        path: "session/:sessionId",
         component: SessionAttendanceComponent
     },
     {
-        path: "attendance/student/:studentTag",
+        path: "student/:studentTag",
         component: StudentAttendanceComponent
-    },
-    {
-        path: "register/:sessionId/:tag",
-        component: RegisterComponent
     },
     {
         path: "scan/:sessionId",
