@@ -4,6 +4,7 @@ import {ConnectComponent} from "./component/connect.component";
 import {SessionAttendanceComponent} from "./component/session.component";
 import {StudentAttendanceComponent} from "./component/student.component";
 import {ScanComponent} from "./component/scan.component";
+import {ConfirmDeactivateGuard} from "./deactivateguard";
 
 const appRoutes: Routes = [
     {
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
     },
     {
         path: "scan/:sessionId",
-        component: ScanComponent
+        component: ScanComponent,
+        canDeactivate: [ConfirmDeactivateGuard]
     }
 ];
 

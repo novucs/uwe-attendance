@@ -1,0 +1,13 @@
+<h2 md-dialog-title>Enter Password</h2>
+<md-dialog-content>Credentials are required for exiting this screen</md-dialog-content>
+<md-dialog-actions>
+    <md-list>
+        <md-list-item>
+            <input type="password" placeholder="Enter Password" mdInput [(ngModel)]="password">
+        </md-list-item>
+        <md-list-item>
+            <button md-button [md-dialog-close]="null">Cancel</button>
+            <button md-button [md-dialog-close]="password">Confirm</button>
+        </md-list-item>
+    </md-list>
+</md-dialog-actions>

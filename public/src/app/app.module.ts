@@ -2,7 +2,6 @@ import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
-import {Ng2CompleterModule} from "ng2-completer";
 import {
     MdAutocompleteModule,
     MdButtonModule,
@@ -29,19 +28,21 @@ import {SessionAttendanceComponent} from "./component/session.component";
 import {StudentAttendanceComponent} from "./component/student.component";
 import {ScanComponent} from "./component/scan.component";
 import {RegisterComponent} from "./component/register.component";
+import {ConfirmDeactivateGuard} from "./deactivateguard";
+import {PromptComponent} from "./component/prompt.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         ConnectComponent,
+        PromptComponent,
+        RegisterComponent,
         SessionAttendanceComponent,
         StudentAttendanceComponent,
-        RegisterComponent,
         ScanComponent
     ],
     imports: [
         BrowserModule,
-        Ng2CompleterModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
@@ -65,10 +66,12 @@ import {RegisterComponent} from "./component/register.component";
     ],
     providers: [
         AttendanceApiService,
-        appRoutingProviders
+        appRoutingProviders,
+        ConfirmDeactivateGuard
     ],
 
     entryComponents: [
+        PromptComponent,
         RegisterComponent
     ],
     bootstrap: [AppComponent]
