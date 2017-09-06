@@ -21,8 +21,9 @@
                     <h4>Progress this year</h4>
                     <md-progress-bar
                             [color]="primary"
-                            [mode]="determinate"
-                            [value]="100*(attended.size)/(students.length)">
+                            [mode]="buffer"
+                            [value]="100*(attended.size)/(students.length)"
+                            [bufferValue]="100*(todo.size)/(students.length)">
                     </md-progress-bar>
                 </md-list>
             </md-tab>
