@@ -7,7 +7,7 @@
             <md-tab label="Take Register">
                 <br/>
                 <md-card-subtitle>Start the register for this session</md-card-subtitle>
-                <md-select placeholder="Session" [(ngModel)]="currentSession" [style.width]="'100%'">
+                <md-select placeholder="Select the current session" [(ngModel)]="currentSession" [style.width]="'100%'">
                     <md-option *ngFor="let schedule of sessionsToday" [value]="schedule">
                         {{ formatDate(schedule.onDate) }} - {{ schedule.event }}
                     </md-option>
@@ -25,7 +25,7 @@
             <md-tab label="Session Records">
                 <br/>
                 <md-card-subtitle>View all attendance for a session</md-card-subtitle>
-                <md-select placeholder="Record" [(ngModel)]="session" [style.width]="'100%'">
+                <md-select placeholder="Select a session" [(ngModel)]="session" [style.width]="'100%'">
                     <md-option *ngFor="let schedule of sessions" [value]="schedule">
                         {{ formatDate(schedule.onDate) }} - {{ schedule.event }}
                     </md-option>
@@ -43,7 +43,7 @@
             <md-tab label="Student Records">
                 <br/>
                 <md-card-subtitle>View all attendance for a student</md-card-subtitle>
-                <md-select placeholder="Record" [(ngModel)]="student" [style.width]="'100%'">
+                <md-select placeholder="Select a student" [(ngModel)]="student" [style.width]="'100%'">
                     <md-option *ngFor="let student of students" [value]="student">
                         {{ student.name }}
                     </md-option>
