@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AttendanceApiService} from "./api.service";
+import {AttendanceApiService} from "../api.service";
 import {$WebSocket} from "angular2-websocket/angular2-websocket";
 
 @Component({

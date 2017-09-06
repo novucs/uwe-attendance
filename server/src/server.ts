@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(express.static(path.join(__dirname, "../../public/build")));
+app.use(express.static(path.join(__dirname, "../../public/dist")));
 
 app.use("/api", scheduleRouter);
 app.use("/api", studentRouter);
@@ -27,7 +27,7 @@ app.use("/api", attendanceRouter);
 // Serve up the Angular app.
 app.get('*', (req, res) => {
     console.log("Serving client");
-    res.sendFile(path.join(__dirname, "../../public/build/index.html"));
+    res.sendFile(path.join(__dirname, "../../public/dist/index.html"));
 });
 
 // Serve the application at the given port.
@@ -54,14 +54,14 @@ server.on("connection", ws => {
     // ws.send("123456");
 });
 
-const device = new nfc.NFC();
-
-device.on("read", tag => {
-    clients.forEach(client => {
-        if (client.readyState == WebSocket.OPEN) {
-            client.send(tag.uid);
-        }
-    });
-}).on("error", error => {
-    console.log("An error occurred while reading the NFC device: ", error);
-}).start();
+// const device = new nfc.NFC();
+//
+// device.on("read", tag => {
+//     clients.forEach(client => {
+//         if (client.readyState == WebSocket.OPEN) {
+//             client.send(tag.uid);
+//         }
+//     });
+// }).on("error", error => {
+//     console.log("An error occurred while reading the NFC device: ", error);
+// }).start();

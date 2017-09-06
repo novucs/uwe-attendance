@@ -1,0 +1,62 @@
+<md-card>
+    <md-toolbar>
+        <span>Session Attendance</span>
+    </md-toolbar>
+    <br/>
+    <md-tab-group>
+        <md-tab label="Overview">
+            <br/>
+            <md-card-title>Overview for {{session.event}} on {{formatDate(session.onDate)}}</md-card-title>
+            <md-list>
+                <md-list-item>
+                    <md-icon md-list-icon>thumb_up</md-icon>
+                    <h4 md-line>Total Attended</h4>
+                    <p md-line>{{attended.size}}</p>
+                </md-list-item>
+                <md-list-item>
+                    <md-icon md-list-icon>thumb_down</md-icon>
+                    <h4 md-line>Total Absent</h4>
+                    <p md-line>{{absent.size}}</p>
+                </md-list-item>
+                <h4>Progress this year</h4>
+                <md-progress-bar
+                        [color]="primary"
+                        [mode]="determinate"
+                        [value]="100*(attended.size)/(students.length)">
+                </md-progress-bar>
+            </md-list>
+        </md-tab>
+        <md-tab label="Detailed Attendance">
+            <br/>
+            <md-card-title>Detailed attendance for {{session.event}} on {{formatDate(session.onDate)}}</md-card-title>
+            <md-table #table [dataSource]="dataSource">
+                <!-- Tag Column -->
+                <ng-container mdColumnDef="tag">
+                    <md-header-cell *mdHeaderCellDef> Tag</md-header-cell>
+                    <md-cell *mdCellDef="let row"> {{row.tag}}</md-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container mdColumnDef="name">
+                    <md-header-cell *mdHeaderCellDef> Name</md-header-cell>
+                    <md-cell *mdCellDef="let row"> {{row.name}}</md-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container mdColumnDef="status">
+                    <md-header-cell *mdHeaderCellDef> Status</md-header-cell>
+                    <md-cell *mdCellDef="let row"> {{attended.has(row) ? "Attended" : "Absent"}}</md-cell>
+                </ng-container>
+
+                <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+            </md-table>
+            <md-paginator #paginator
+                          [length]="database.data.length"
+                          [pageIndex]="0"
+                          [pageSize]="10"
+                          [pageSizeOptions]="[5, 10, 25, 100]">
+            </md-paginator>
+        </md-tab>
+    </md-tab-group>
+</md-card>

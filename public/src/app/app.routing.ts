@@ -1,10 +1,10 @@
 import {ModuleWithProviders} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {ConnectComponent} from "./connect.component";
-import {SessionAttendanceComponent} from "./attendance.session.component";
-import {StudentAttendanceComponent} from "./attendance.student.component";
-import {RegisterComponent} from "./register.component";
-import {ScanComponent} from "./scan.component";
+import {ConnectComponent} from "./component/connect.component";
+import {SessionAttendanceComponent} from "./component/session.component";
+import {StudentAttendanceComponent} from "./component/student.component";
+import {RegisterComponent} from "./component/register.component";
+import {ScanComponent} from "./component/scan.component";
 
 const appRoutes: Routes = [
     {

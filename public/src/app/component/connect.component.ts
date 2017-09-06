@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {AttendanceApiService, Session, Student} from "./api.service";
+import {AttendanceApiService, EMPTY_SESSION, EMPTY_STUDENT, Session, Student} from "../api.service";
 
 @Component({
     selector: "app-connect",
@@ -10,6 +10,8 @@ export class ConnectComponent implements OnInit {
     sessionsToday: Session[] = [];
     sessions: Session[] = [];
     students: Student[] = [];
+    session: Session = EMPTY_SESSION;
+    student: Student = EMPTY_STUDENT;
 
     constructor(private api: AttendanceApiService) {
     }

@@ -1,5 +1,5 @@
 .idea/
-public/build/
+public/dist/
 public/node_modules/
 public/package-lock.json
 scripts/build/

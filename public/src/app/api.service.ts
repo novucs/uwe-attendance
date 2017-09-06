@@ -11,7 +11,7 @@ export class AttendanceApiService {
 
     formatDate(date: Date) {
         const datePipe = new DatePipe("en-UK");
-        return datePipe.transform(date, "dd/MM/yyyy @ HH:mm:ss");
+        return datePipe.transform(date, "dd/MM/yyyy @ HH:mm");
     }
 
     getAllAttendances() {
@@ -96,6 +96,10 @@ export class AttendanceApiService {
             });
     }
 }
+
+export const EMPTY_SESSION: Session = {_id: "_", event: "_", onDate: new Date(), groups: []};
+export const EMPTY_STUDENT: Student = {_id: "_", tag: "_", name: "_", groups: []};
+export const EMPTY_ATTENDANCE: Attendance = {_id: "_", sessionId: "_", studentTag: "_"};
 
 export interface Session {
     _id: string;
