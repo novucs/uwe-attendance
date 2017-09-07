@@ -1,0 +1,73 @@
+<md-card>
+    <md-card-title>
+        <span>Attendance Stats</span>
+    </md-card-title>
+    <md-card-content>
+        <md-tab-group>
+            <md-tab label="This weeks stats">
+                <br/>
+                <md-card-subtitle>Detailed attendance for this week</md-card-subtitle>
+                <md-table #table [dataSource]="weeklyDataSource">
+                    <!-- Name Column -->
+                    <ng-container mdColumnDef="name">
+                        <md-header-cell *mdHeaderCellDef>Name</md-header-cell>
+                        <md-cell *mdCellDef="let row">{{row.name}}</md-cell>
+                    </ng-container>
+
+                    <!-- Absence Count Column -->
+                    <ng-container mdColumnDef="absent">
+                        <md-header-cell *mdHeaderCellDef>Weekly Absence</md-header-cell>
+                        <md-cell *mdCellDef="let row">{{row.absence}}</md-cell>
+                    </ng-container>
+
+                    <!-- Attendance Count Column -->
+                    <ng-container mdColumnDef="attended">
+                        <md-header-cell *mdHeaderCellDef>Weekly Attendance</md-header-cell>
+                        <md-cell *mdCellDef="let row">{{row.attendance}}</md-cell>
+                    </ng-container>
+
+                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                </md-table>
+                <md-paginator #paginator
+                              [length]="weeklyDatabase.data.length"
+                              [pageIndex]="0"
+                              [pageSize]="10"
+                              [pageSizeOptions]="[5, 10, 25, 100]">
+                </md-paginator>
+            </md-tab>
+            <md-tab label="This total stats">
+                <br/>
+                <md-card-subtitle>Detailed attendance totals</md-card-subtitle>
+                <md-table #table [dataSource]="totalDataSource">
+                    <!-- Name Column -->
+                    <ng-container mdColumnDef="name">
+                        <md-header-cell *mdHeaderCellDef>Name</md-header-cell>
+                        <md-cell *mdCellDef="let row">{{row.name}}</md-cell>
+                    </ng-container>
+
+                    <!-- Absence Count Column -->
+                    <ng-container mdColumnDef="absent">
+                        <md-header-cell *mdHeaderCellDef>Total Absence</md-header-cell>
+                        <md-cell *mdCellDef="let row">{{row.absence}}</md-cell>
+                    </ng-container>
+
+                    <!-- Attendance Count Column -->
+                    <ng-container mdColumnDef="attended">
+                        <md-header-cell *mdHeaderCellDef>Total Attendance</md-header-cell>
+                        <md-cell *mdCellDef="let row">{{row.attendance}}</md-cell>
+                    </ng-container>
+
+                    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+                    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+                </md-table>
+                <md-paginator #paginator
+                              [length]="totalDatabase.data.length"
+                              [pageIndex]="0"
+                              [pageSize]="10"
+                              [pageSizeOptions]="[5, 10, 25, 100]">
+                </md-paginator>
+            </md-tab>
+        </md-tab-group>
+    </md-card-content>
+</md-card>

@@ -30,6 +30,7 @@ import {ScanComponent} from "./component/scan.component";
 import {RegisterComponent} from "./component/register.component";
 import {ConfirmDeactivateGuard} from "./deactivateguard";
 import {PromptComponent} from "./component/prompt.component";
+import {StatsComponent} from "./component/stats.component";
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import {PromptComponent} from "./component/prompt.component";
         PromptComponent,
         RegisterComponent,
         SessionAttendanceComponent,
+        StatsComponent,
         StudentAttendanceComponent,
         ScanComponent
     ],

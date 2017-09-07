@@ -5,11 +5,16 @@ import {SessionAttendanceComponent} from "./component/session.component";
 import {StudentAttendanceComponent} from "./component/student.component";
 import {ScanComponent} from "./component/scan.component";
 import {ConfirmDeactivateGuard} from "./deactivateguard";
+import {StatsComponent} from "./component/stats.component";
 
 const appRoutes: Routes = [
     {
         path: "",
         component: ConnectComponent
+    },
+    {
+        path: "stats",
+        component: StatsComponent
     },
     {
         path: "session/:sessionId",

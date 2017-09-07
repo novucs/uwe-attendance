@@ -53,7 +53,7 @@ export class StudentAttendanceComponent implements OnInit {
 
                     attendances.forEach((attendance) => attendedIds.add(attendance.sessionId));
                     this.sessions.forEach((session) => {
-                        if (session.onDate > today) {
+                        if (new Date(session.onDate).getTime() > today.getTime()) {
                             this.todo.add(session);
                         } else if (attendedIds.has(session._id)) {
                             this.attended.add(session);
@@ -62,9 +62,9 @@ export class StudentAttendanceComponent implements OnInit {
                         }
                         this.database.addSession(session);
                     });
-                })
+                });
             });
-        })
+        });
     }
 }
 

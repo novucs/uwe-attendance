@@ -46,7 +46,7 @@
                     <!-- Status Column -->
                     <ng-container mdColumnDef="status">
                         <md-header-cell *mdHeaderCellDef> Status</md-header-cell>
-                        <md-cell *mdCellDef="let row"> {{attended.has(row) ? "Attended" : "Absent"}}</md-cell>
+                        <md-cell *mdCellDef="let row"> {{attended.has(row) ? "Attended" : todo.has(row) ? "Future session" : "Absent"}}</md-cell>
                     </ng-container>
 
                     <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
