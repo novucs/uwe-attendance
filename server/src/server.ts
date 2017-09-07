@@ -54,14 +54,25 @@ server.on("connection", ws => {
     // ws.send("123456");
 });
 
-// const device = new nfc.NFC();
-//
-// device.on("read", tag => {
-//     clients.forEach(client => {
-//         if (client.readyState == WebSocket.OPEN) {
-//             client.send(tag.uid);
-//         }
-//     });
-// }).on("error", error => {
-//     console.log("An error occurred while reading the NFC device: ", error);
-// }).start();
+const device = new nfc.NFC();
+let shouldSend = true;
+
+device.on("read", tag => {
+    if (!shouldSend) {
+        return;
+    }
+
+    shouldSend = false;
+
+    setTimeout(() => {
+        shouldSend = true;
+    }, 1500);
+
+    clients.forEach(client => {
+        if (client.readyState == WebSocket.OPEN) {
+            client.send(tag.uid);
+        }
+    });
+}).on("error", error => {
+    console.log("An error occurred while reading the NFC device: ", error);
+}).start();
