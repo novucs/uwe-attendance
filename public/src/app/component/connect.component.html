@@ -45,7 +45,7 @@
                 <md-card-subtitle>View all attendance for a student</md-card-subtitle>
                 <md-select placeholder="Select a student" [(ngModel)]="student" [style.width]="'100%'">
                     <md-option *ngFor="let student of students" [value]="student">
-                        {{ student.name }}
+                        {{ student.name + (student.tag === '' ? " (Not Registered)" : "")}}
                     </md-option>
                 </md-select>
                 <br/>
@@ -53,7 +53,7 @@
                 <br/>
                 <button md-raised-button
                         color="primary"
-                        disabled="{{student.tag == '_'}}"
+                        disabled="{{student.tag === '' || student.tag == '_'}}"
                         [routerLink]="['/student', student.tag]">
                     Submit
                 </button>
