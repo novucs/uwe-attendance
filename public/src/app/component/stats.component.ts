@@ -9,6 +9,8 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 
+export const WEEK_MILLIS: number = 604800000;
+
 export interface StudentAttendance {
     name: string;
     absence: number;
@@ -93,7 +95,7 @@ export class StatsComponent implements OnInit {
                     return;
                 }
 
-                if (currentTime - 604800000 < sessionTime) {
+                if (currentTime - WEEK_MILLIS < sessionTime) {
                     if (sessionIds.has(session._id)) {
                         weeklyAttendance.attendance++;
                     } else {

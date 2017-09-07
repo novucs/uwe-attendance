@@ -22,6 +22,16 @@
                     Submit
                 </button>
             </md-tab>
+            <md-tab label="Statistics">
+                <br/>
+                <md-card-subtitle>View all attendance statistics</md-card-subtitle>
+                <br/>
+                <button md-raised-button
+                        color="primary"
+                        [routerLink]="['/stats']">
+                    Click here to view stats
+                </button>
+            </md-tab>
             <md-tab label="Session Records">
                 <br/>
                 <md-card-subtitle>View all attendance for a session</md-card-subtitle>
@@ -56,16 +66,6 @@
                         disabled="{{student.tag === '' || student.tag == '_'}}"
                         [routerLink]="['/student', student.tag]">
                     Submit
-                </button>
-            </md-tab>
-            <md-tab label="Stats">
-                <br/>
-                <md-card-subtitle>View all attendance statistics</md-card-subtitle>
-                <br/>
-                <button md-raised-button
-                        color="primary"
-                        [routerLink]="['/stats']">
-                    Click here to view stats
                 </button>
             </md-tab>
         </md-tab-group>
